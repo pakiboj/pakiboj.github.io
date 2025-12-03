@@ -1,0 +1,260 @@
+#include <stdio.h>
+#include <xstatus.h>
+#include "xparameters.h"
+#include "xgpio.h"
+
+#define BTN_CH 1
+#define LED_CH 2
+
+int main () {
+    XGpio AxiGpioInst;
+    XGpio_Config *AxiGpioConfig;
+
+    int status;
+    unsigned int data_value;
+    
+    AxiGpioConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_BASEADDR);
+
+    status = XGpio_Initialize(&AxiGpioInst, AxiGpioConfig->BaseAddress);
+    if(status != XST_SUCCESS) return XST_FAILURE;
+
+    XGpio_SetDataDirection(&AxiGpioInst, BTN_CH, 0xF);
+    XGpio_SetDataDirection(&AxiGpioInst, LED_CH, 0x0);
+    printf("Hello world!\n\r");
+    while(1){
+        data_value = XGpio_DiscreteRead(&AxiGpioInst, BTN_CH);
+        XGpio_DiscreteWrite(&AxiGpioInst, LED_CH, data_value);
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <xstatus.h>
+#include "xparameters.h"
+#include "xgpio.h"
+
+#define BTN_CH 1
+#define LED_CH 2
+
+int main () {
+    XGpio AxiGpioInst;
+    XGpio_Config *AxiGpioConfig;
+
+    int status;
+    unsigned int btn_value , btn_value_new;
+    unsigned int data_value;
+
+    
+    AxiGpioConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_BASEADDR);
+
+    status = XGpio_Initialize(&AxiGpioInst, AxiGpioConfig->BaseAddress);
+    if(status != XST_SUCCESS) return XST_FAILURE;
+
+    XGpio_SetDataDirection(&AxiGpioInst, BTN_CH, 0xF);
+    XGpio_SetDataDirection(&AxiGpioInst, LED_CH, 0x0);
+    printf("Hello world!\n\r");
+
+    btn_value=0;
+    data_value=0;
+
+    while(1){
+        btn_value_new = XGpio_DiscreteRead(&AxiGpioInst, BTN_CH);
+        if(btn_value_new>btn_value) data_value++;
+        if(data_value>15) data_value=0;
+        btn_value=btn_value_new;
+
+        XGpio_DiscreteWrite(&AxiGpioInst, LED_CH, data_value);
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <sys/_intsup.h>
+#include <xstatus.h>
+#include "xparameters.h"
+#include "xgpio.h"
+#include"xinterrupt_wrap.h"
+
+#define BTN_CH 1
+#define LED_CH 2
+#define BTN_INT XGPIO_IR_CH1_MASK
+
+volatile unsigned int data_value;
+
+void ISR_AxiGpioHandler(void* CallbackRef)
+{
+    XGpio* AxiGpioInstPtr = (XGpio*) CallbackRef;
+    unsigned int btn_value;
+
+    XGpio_InterruptDisable( AxiGpioInstPtr, BTN_INT);
+    
+    btn_value = XGpio_DiscreteRead(AxiGpioInstPtr, BTN_CH);
+    
+    data_value= data_value + btn_value;
+    if(data_value>15) data_value=0;
+
+    XGpio_InterruptClear(AxiGpioInstPtr, BTN_INT);
+    XGpio_InterruptEnable(AxiGpioInstPtr, BTN_INT);
+
+}
+int main () {
+    XGpio AxiGpioInst;
+    XGpio_Config *AxiGpioConfig;
+
+    int status;
+    
+    AxiGpioConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_BASEADDR);
+
+    status = XGpio_Initialize(&AxiGpioInst, AxiGpioConfig->BaseAddress);
+    if(status != XST_SUCCESS) return XST_FAILURE;
+
+    XGpio_SetDataDirection(&AxiGpioInst, BTN_CH, 0xF);
+    XGpio_SetDataDirection(&AxiGpioInst, LED_CH, 0x0);
+    
+    status = XSetupInterruptSystem(&AxiGpioInst,
+                                        ISR_AxiGpioHandler,
+                                            AxiGpioConfig->IntrId,
+                                        AxiGpioConfig->IntrParent,
+                                            XINTERRUPT_DEFAULT_PRIORITY);
+
+    XGpio_InterruptGlobalEnable(&AxiGpioInst);
+    XGpio_InterruptEnable(&AxiGpioInst, BTN_INT);
+    printf("Hello from Zynq!\n\r");
+    data_value=0;
+
+    while(1){
+
+        XGpio_DiscreteWrite(&AxiGpioInst, LED_CH, data_value);
+    }
+    return 0;
+}
+
+
+
+
+
+
+#include <stdio.h>
+#include <sys/_intsup.h>
+#include <xstatus.h>
+#include <xtmrctr_l.h>
+#include "xparameters.h"
+#include "xgpio.h"
+#include"xinterrupt_wrap.h"
+#include "xtmrctr.h"
+
+#define BTN_CH 1
+#define LED_CH 2
+#define BTN_INT XGPIO_IR_CH1_MASK
+
+#define TMR_CNT_0 0
+
+#define BTN_INC 0b0001
+#define BTN_DEC 0b0010
+
+volatile unsigned int data_value;
+volatile unsigned int data_interval;
+volatile unsigned int timer_interrupt_count;
+
+void ISR_AxiGpioHandler(void* CallbackRef)
+{
+    XGpio* AxiGpioInstPtr = (XGpio*) CallbackRef;
+    unsigned int btn_value;
+
+    XGpio_InterruptDisable( AxiGpioInstPtr, BTN_INT);
+    
+    btn_value = XGpio_DiscreteRead(AxiGpioInstPtr, BTN_CH);
+    
+    if(btn_value & BTN_INC)
+    {
+        if(data_interval < 5) data_interval++;
+    }else if(btn_value & BTN_DEC)
+    {
+        if(data_interval > 1)data_interval --;
+    }
+
+    XGpio_InterruptClear(AxiGpioInstPtr, BTN_INT);
+    XGpio_InterruptEnable(AxiGpioInstPtr, BTN_INT);
+
+}
+
+void ISR_AxiTimerHandler(void* CallbackRef,unsigned char TmrCtrNumber)
+{
+    XTmrCtr* AxiTimerPtr = (XTmrCtr*) CallbackRef;
+    
+    if(XTmrCtr_IsExpired(AxiTimerPtr,TMR_CNT_0))
+    {
+        if(timer_interrupt_count >=data_interval-1)
+        {
+            timer_interrupt_count=0;
+            data_value=data_value+1;
+        }else{
+            timer_interrupt_count++;
+        }
+    
+    }
+}
+int main () {
+    XGpio AxiGpioInst;
+    XGpio_Config *AxiGpioConfig;
+    XTmrCtr AxiTimerInst;
+
+    int status;
+    
+    AxiGpioConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_BASEADDR);
+    
+    status = XGpio_Initialize(&AxiGpioInst, AxiGpioConfig->BaseAddress);
+    if(status != XST_SUCCESS) return XST_FAILURE;
+
+    status = XTmrCtr_Initialize(&AxiTimerInst, XPAR_AXI_TIMER_0_BASEADDR);
+    if(status != XST_SUCCESS) return XST_FAILURE;
+
+    XGpio_SetDataDirection(&AxiGpioInst, BTN_CH, 0xF);
+    XGpio_SetDataDirection(&AxiGpioInst, LED_CH, 0x0);
+    
+    status = XSetupInterruptSystem(&AxiTimerInst,
+                                        (XInterruptHandler)XTmrCtr_InterruptHandler,
+                                                AxiTimerInst.Config.IntrId,
+                                        AxiTimerInst.Config.IntrParent,
+                                            XINTERRUPT_DEFAULT_PRIORITY);
+     if(status != XST_SUCCESS) return XST_FAILURE;
+
+    XTmrCtr_SetHandler(&AxiTimerInst, ISR_AxiTimerHandler,&AxiTimerInst);
+    XTmrCtr_SetResetValue(&AxiTimerInst, TMR_CNT_0, XPAR_AXI_TIMER_0_CLOCK_FREQUENCY);
+    XTmrCtr_SetOptions(&AxiTimerInst, TMR_CNT_0, XTC_INT_MODE_OPTION|XTC_DOWN_COUNT_OPTION|XTC_AUTO_RELOAD_OPTION);
+
+    printf("Timer int done!\n\r");
+
+    XGpio_InterruptGlobalEnable(&AxiGpioInst);
+    XGpio_InterruptEnable(&AxiGpioInst, BTN_INT);
+    printf("Hello from Zynq!\n\r");
+
+    data_value=0;
+    timer_interrupt_count= 0;
+    data_interval=1;
+    XTmrCtr_Start(&AxiTimerInst,TMR_CNT_0);
+
+    while(1){
+
+        XGpio_DiscreteWrite(&AxiGpioInst, LED_CH, data_value);
+    }
+    return 0;
+}

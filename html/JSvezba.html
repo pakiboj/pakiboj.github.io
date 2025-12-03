@@ -1,0 +1,36 @@
+<script language="javascript">
+
+    function promeniBoju() {
+        document.body.style.backgroundColor = "lightblue";
+    }
+
+    // Dugme koje menja boju pozadine
+    document.write("<button onclick='promeniBoju()'> Promeni boju pozadine </button>");
+
+    a = new Array("Jabuka", "Kruska", "Banana");
+    duzina = a.length;
+    document.write("<br> Voce koje volim: <br>");
+    for (i = 0; i < a.length; i++) {
+        document.write(a[i] + "<br>");
+    }
+    document.write("Duzina niza je: " + duzina);
+
+    datum = new Date();
+    document.write("<br> Trenutni datum: " + datum);
+    datum2 = new Date(2003, 0, 21, 7, 45, 0 );
+    document.write("<br> Moj rodjendan: " + datum2);
+
+    dan = datum.getDay();
+    document.write("<br> Dan u nedelji je: " + dan);
+    mesec = datum.getMonth();
+    document.write("<br> Mesec u godini je: " + mesec);
+    godina = datum.getFullYear();
+    document.write("<br> Godina je: " + godina);
+
+    vreme1 = datum.getTime();
+    vreme2 = datum2.getTime();
+    razlika = vreme1 - vreme2;  
+    godine = Math.floor(razlika / (1000 * 60 * 60 * 24 * 365));
+    document.write("<br> Ja imam ovoliko godina: " + godine);
+
+</script>   

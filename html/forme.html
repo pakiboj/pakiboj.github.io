@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="../index.html">Povratak na prvu stranicu</a>
+    <br
+<form action="demo_form.asp">
+        <fieldset>  
+            <legend> Login</legend>
+            <input type="text" name="ime" placeholder="Unesite ime" autofocus><br>
+            <input type="text" name="prezime"
+                placeholder="Unesite prezime"><br>
+            <input type="password" name="lozinka" placeholder="Unesite lozinku"><br>
+            <input type="email" name="email" placeholder="Unesite email"><br>
+            <input type="tel" name="telefon" placeholder="Unesite telefon"><br>
+        </fieldset>
+        
+        
+        <input type="button" name="Proveri" value="OK" onClick="funkcijaZaProveru()">
+        <input type="reset" value="Ponisti">
+
+        <br>
+        <I>Zagoganavijaz?</I><br>
+        <INPUT type="radio" name="tim" value="cz"> Crvena Zvezda<br>
+        <INPUT type="radio" name="tim" value="par">Partizan
+        <br>
+        Unesite datum pre 2015-01-01:
+        <input type="date" name="bday" max="2014-12-31"><br> 
+        Unesite datum nakon 2000-01-01:
+        <input type="date" name="bday" min="2000-01-02"><br>
+        Kolicina (izmedju 1 i 5):
+        <input type="number" name="quantity" min="1" max="5"><br>
+        Poeni: <input type="range" name="poeni" min="0" max="10"><br>
+
+        <B>Moj omiljeni predmet na 1. godini je:</B>
+        <select name="predmeti">
+        <option>Analiza</option> <option>Algebra</option>
+        <option selected>Programiranje</option>
+        </select>
+        <br>
+
+        <input type="hidden" name="serial"
+        value="08100-38069">
+
+        Izaberite omiljenu boju:
+        <input type="color" name="favcolor"><br>
+
+        <input type="submit" value="potvrdi"> 
+    
+    </form>    
+</body>
+</html>

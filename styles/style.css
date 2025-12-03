@@ -1,0 +1,46 @@
+h1, h2 {background-color: #ffcc00;}
+p.drugo {color: red; font-size: 20px;}
+img {
+    width: 40%;
+    border: 6px solid #e9e617;
+}
+div#paki {
+    width: 60%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 60px;
+}
+div#img {
+    width: 40%;
+    text-align: center;
+}
+
+p {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    color: rgb(66, 65, 65);
+}
+body {
+    background-color: rgb(57, 162, 76);
+    margin: 20px 50px 20px 50px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(110, 13, 105);
+    text-decoration: underline;
+    font-family: 'Times New Roman', Times, serif;
+}
+a:hover {
+    text-decoration: underline;
+    color: rgb(27, 44, 231);
+}
+a:active {
+    text-decoration: underline;
+    color: rgb(25, 228, 32);
+}
+a:visited {
+    text-decoration: none;
+    color: rgb(255, 25, 25);
+}
+
+
