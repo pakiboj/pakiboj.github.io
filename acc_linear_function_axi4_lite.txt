@@ -1,0 +1,327 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity acc_linear_function is
+    Generic (
+        C_S_AXI_DATA_WIDTH : integer := 32;
+        C_S_AXI_ADDR_WIDTH : integer := 3
+    );
+    Port ( reset : in STD_LOGIC;
+           clk : in STD_LOGIC;
+           		
+           -------- AXI4-Lite interface -------
+	       --  AXI4-Lite Write address channel
+		   s_axi_lite_awaddr  : in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+		   -- protection type (priviledge and security of transaction)
+		   s_axi_lite_awprot  : in std_logic_vector(2 downto 0);
+		   s_axi_lite_awvalid : in std_logic;
+		   s_axi_lite_awready : out std_logic;
+		
+		   --  AXI4-Lite Write data channel
+		   s_axi_lite_wdata  : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+		   s_axi_lite_wstrb  : in std_logic_vector((C_S_AXI_DATA_WIDTH/8)-1 downto 0);
+		   s_axi_lite_wvalid : in std_logic;
+		   s_axi_lite_wready : out std_logic;
+		
+		   --  AXI4-Lite Write response channel
+		   s_axi_lite_bresp  : out std_logic_vector(1 downto 0);
+		   s_axi_lite_bvalid : out std_logic;
+		   s_axi_lite_bready : in std_logic;
+		
+		   --  AXI4-Lite Read address related signals
+		   s_axi_lite_araddr  : in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+		   -- protection type (priviledge and security of transaction)
+		   s_axi_lite_arprot  : in std_logic_vector(2 downto 0);
+		   s_axi_lite_arvalid : in std_logic;
+		   s_axi_lite_arready : out std_logic;
+		
+		   --  AXI4-Lite Read data related signals
+		   s_axi_lite_rdata  : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+		   s_axi_lite_rvalid : out std_logic;
+		   s_axi_lite_rready : in std_logic;
+		   s_axi_lite_rresp  : out std_logic_vector(1 downto 0);
+
+           -- Input AXI Stream interface
+           s_axis_tdata : in STD_LOGIC_VECTOR (7 downto 0);
+           s_axis_tvalid : in STD_LOGIC;
+           s_axis_tready : out STD_LOGIC;
+           s_axis_tlast : in STD_LOGIC;
+           
+           -- Output AXI Stream interface
+           m_axis_tdata : out STD_LOGIC_VECTOR (15 downto 0);
+           m_axis_tvalid : out STD_LOGIC;
+           m_axis_tready : in STD_LOGIC;
+           m_axis_tlast : out STD_LOGIC);
+end acc_linear_function;
+
+architecture Behavioral of acc_linear_function is
+    -- Internal registers accessed via AXI4-Lite interface
+    signal reg_a : std_logic_vector(7 downto 0);
+    signal reg_b : std_logic_vector(7 downto 0);
+    
+    -- AXI4-Lite register addresses
+    constant REG_A_ADDR : std_logic_vector(0 downto 0) := "0";
+    constant REG_B_ADDR : std_logic_vector(0 downto 0) := "1";
+    -- When addressing 32-bit registers, 2 LSB of address are not used
+    -- since each register occupies 4 byte addresses.
+    constant ADDR_LSB   : natural := (C_S_AXI_DATA_WIDTH/32) + 1;
+    
+    -- AXI4-Lite internal signals
+    signal axi_awready : std_logic;
+    signal axi_wready  : std_logic;
+    signal axi_awaddr  : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+    
+    signal axi_bvalid  : std_logic;
+    
+    signal axi_arready : std_logic;
+    signal axi_rvalid  : std_logic;
+    signal axi_araddr  : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+
+    signal reg_waddr : std_logic_vector(C_S_AXI_ADDR_WIDTH-ADDR_LSB-1 downto 0);
+    signal reg_raddr : std_logic_vector(C_S_AXI_ADDR_WIDTH-ADDR_LSB-1 downto 0);
+    
+    signal axi_write_ready : std_logic;
+    signal axi_read_ready : std_logic;
+    
+    -- AXI4-Lite state machines
+    type fsm_read_state_type is  (ReadAddress,  ReadData);
+    type fsm_write_state_type is (WriteAddress, WriteData, WriteStalled);
+    
+    signal fsm_axi_read_state : fsm_read_state_type;
+    signal fsm_axi_write_state : fsm_write_state_type;
+    
+    constant PIPELINE_DEPTH : natural := 3;
+    signal tvalid_fifo : std_logic_vector(PIPELINE_DEPTH-1 downto 0);
+    signal tlast_fifo  : std_logic_vector(PIPELINE_DEPTH-1 downto 0);
+    
+    signal reg_input   : std_logic_vector(7 downto 0);
+    signal reg_product : std_logic_vector(15 downto 0);
+    signal reg_output  : std_logic_vector(15 downto 0);
+    
+    signal buff_tdata  : std_logic_vector(7 downto 0);
+    signal buff_tvalid : std_logic;
+    signal buff_tlast  : std_logic;
+    signal buff_flag   : std_logic;
+   
+begin
+    -- AXI4-Lite write registers
+    process (clk) is
+    begin
+        if (rising_edge(clk)) then
+            if (reset = '1') then
+                reg_a <= std_logic_vector(to_signed(10, reg_a'length));
+                reg_b <= std_logic_vector(to_signed( 5, reg_a'length));
+            else
+                if (axi_write_ready = '1') then
+                    if (s_axi_lite_wstrb(0) = '1') then
+                        case (reg_waddr) is
+                            when REG_A_ADDR => reg_a <= s_axi_lite_wdata(7 downto 0);
+                            when REG_B_ADDR => reg_b <= s_axi_lite_wdata(7 downto 0);
+                            when others =>    
+                        end case;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end process;
+    
+    -- AXI4-Lite read registers
+    s_axi_lite_rdata(7 downto 0) <= reg_a when (reg_raddr = REG_A_ADDR) else
+                                    reg_b when (reg_raddr = REG_B_ADDR) else
+                                    (others => '0');
+    s_axi_lite_rdata(C_S_AXI_DATA_WIDTH-1 downto 8) <= (others => '0');                          
+    
+    -- Set default value of read and write response to OKAY
+    s_axi_lite_bresp <= "00";
+    s_axi_lite_rresp <= "00";
+
+    -- AXI4-Lite read state machine
+    process (clk) is
+    begin
+        if (rising_edge(clk)) then
+            if (reset = '1') then
+                axi_arready <= '0';
+                axi_rvalid  <= '0';
+                fsm_axi_read_state <= ReadAddress;
+            else
+                case (fsm_axi_read_state) is
+                    when ReadAddress =>
+                        axi_arready <= '1';
+                        if (axi_arready = '1' and s_axi_lite_arvalid = '1') then
+                            axi_araddr <= s_axi_lite_araddr;
+                            axi_arready <= '0';
+                            axi_rvalid <= '1';
+                            fsm_axi_read_state <= ReadData;
+                        end if;
+                    when ReadData =>
+                        
+                        if (s_axi_lite_rready = '1' and axi_rvalid = '1') then
+                            axi_rvalid <= '0';
+                            axi_arready <= '1';
+                            fsm_axi_read_state <= ReadAddress;
+                        end if;
+                end case;
+            end if;
+        end if;
+    end process;
+    
+    s_axi_lite_arready <= axi_arready;
+    s_axi_lite_rvalid <= axi_rvalid;
+    
+    reg_raddr <= s_axi_lite_araddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) when (s_axi_lite_arvalid = '1') else
+                        axi_araddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB);
+    
+    -- AXI4-Lite write state machine
+    process (clk) is
+    begin
+        if (rising_edge(clk)) then
+            if (reset = '1') then
+                axi_awready <= '0';
+                axi_wready  <= '0';
+                axi_bvalid  <= '0';
+                fsm_axi_write_state <= WriteAddress;
+            else
+                case (fsm_axi_write_state) is                                              
+                    when WriteAddress =>
+                        axi_awready <= '1';
+                        axi_wready <= '1';
+                    
+                        if (axi_awready = '1' and s_axi_lite_awvalid = '1') then
+                            axi_awaddr <= s_axi_lite_awaddr;
+                            if (axi_wready = '1' and s_axi_lite_wvalid = '1') then
+                                axi_bvalid <= '1';
+                                if (s_axi_lite_bready = '0') then
+                                    axi_awready <= '0';
+                                    axi_wready <= '0';
+                                    fsm_axi_write_state <= WriteStalled;
+                                end if;
+                            else
+                                axi_awready <= '0';
+                                fsm_axi_write_state <= WriteData;
+                                if (s_axi_lite_bready = '1' and axi_bvalid = '1') then
+                                    axi_bvalid <= '0';
+                                end if;
+                            end if;
+                        else
+                            if (s_axi_lite_bready = '1' and axi_bvalid = '1') then
+                                axi_bvalid <= '0';
+                            end if;
+                        end if;
+                        
+                    when WriteData =>
+                        if (axi_wready = '1' and s_axi_lite_wvalid = '1') then
+                            axi_bvalid <= '1';
+                            if (s_axi_lite_bready = '0') then
+                                axi_awready <= '0';
+                                axi_wready <= '0';
+                                fsm_axi_write_state <= WriteStalled;
+                            else
+                                axi_awready <= '1';
+                                axi_wready <= '1';
+                                fsm_axi_write_state <= WriteAddress;
+                            end if;
+                        else
+                            if (s_axi_lite_bready = '1' and axi_bvalid = '1') then
+                                axi_bvalid <= '0';
+                            end if;
+                        end if;
+                        
+                    when WriteStalled =>
+                        if (s_axi_lite_bready = '1' and axi_bvalid = '1') then
+                            axi_bvalid <= '0';
+                            axi_awready <= '1';
+                            axi_wready <= '1';
+                            fsm_axi_write_state <= WriteAddress;
+                        end if;
+                        
+                    when others =>
+                        axi_awready <= '0';
+                        axi_wready <= '0';
+                        axi_bvalid <= '0';
+                        fsm_axi_write_state <= WriteAddress;
+                end case;
+            end if;
+        end if;
+     end process;
+        
+    s_axi_lite_awready <= axi_awready;
+    s_axi_lite_wready  <= axi_wready;
+    s_axi_lite_bvalid <= axi_bvalid;
+    
+    axi_write_ready <= '1' when ((fsm_axi_write_state = WriteAddress and s_axi_lite_awvalid = '1' and s_axi_lite_wvalid = '1') or
+                                 (fsm_axi_write_state = WriteData and s_axi_lite_wvalid = '1')) else '0';
+    
+    reg_waddr <= s_axi_lite_awaddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) when (s_axi_lite_awvalid = '1') else axi_awaddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB);--s_axi_lite_awaddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) when (s_axi_lite_awvalid = '1') else axi_awaddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB);   
+
+ 
+    process (clk) is
+    begin
+        if (rising_edge(clk)) then
+            if (reset = '1') then
+                tvalid_fifo <= (others => '0');
+                tlast_fifo  <= (others => '0');
+                
+                reg_input   <= (others => '0');
+                reg_product <= (others => '0');
+                reg_output  <= (others => '0');
+                
+                buff_tdata  <= (others => '0');
+                buff_tvalid <= '0';
+                buff_tlast  <= '0';
+                buff_flag   <= '0';
+            else
+                if (tvalid_fifo(PIPELINE_DEPTH-1) = '0' or m_axis_tready = '1') then
+                    -- 1st pipeline stage
+                    if (buff_flag = '1') then
+                        reg_input      <= buff_tdata;
+                        tvalid_fifo(0) <= buff_tvalid;
+                        tlast_fifo(0)  <= buff_tlast;
+                        buff_flag <= '0';                       
+                    else
+                        reg_input      <= s_axis_tdata;
+                        tvalid_fifo(0) <= s_axis_tvalid;
+                        tlast_fifo(0)  <= s_axis_tlast;
+                    end if;
+
+                    -- 2nd pipeline stage
+                    reg_product <= std_logic_vector(signed(reg_a) * signed(reg_input));
+                    tvalid_fifo(1) <= tvalid_fifo(0);
+                    tlast_fifo(1)  <= tlast_fifo(0);
+                    
+                    -- 3rd pipeline stage
+                    reg_output <= std_logic_vector(signed(reg_product) + signed(reg_b));
+                    tvalid_fifo(2) <= tvalid_fifo(1);
+                    tlast_fifo(2)  <= tlast_fifo(1);
+                else
+                    if (buff_flag = '0') then
+                        buff_tdata  <= s_axis_tdata;
+                        buff_tvalid <= s_axis_tvalid;
+                        buff_tlast  <= s_axis_tlast;
+                        buff_flag <= '1';
+                    end if;    
+                end if; 
+            end if;
+        end if;
+    end process;
+    
+    m_axis_tvalid <= tvalid_fifo(PIPELINE_DEPTH-1);
+    m_axis_tlast  <= tlast_fifo(PIPELINE_DEPTH-1);
+    m_axis_tdata  <= reg_output;
+    
+    process (clk) is
+    begin
+        if (rising_edge(clk)) then
+            if (reset = '1') then
+                s_axis_tready <= '0';
+            else
+                if (tvalid_fifo(PIPELINE_DEPTH-1) = '0' or m_axis_tready = '1') then
+                    s_axis_tready <= '1';
+                else
+                    s_axis_tready <= '0';
+                end if;
+            end if;
+        end if;
+    end process;
+
+end Behavioral;

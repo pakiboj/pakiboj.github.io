@@ -1,4 +1,12 @@
-<script language="javascript">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script language="javascript">
 
     function promeniBoju() {
         document.body.style.backgroundColor = "lightblue";
@@ -33,4 +41,50 @@
     godine = Math.floor(razlika / (1000 * 60 * 60 * 24 * 365));
     document.write("<br> Ja imam ovoliko godina: " + godine);
 
-</script>   
+    </script> 
+
+    <!--  --------------------------------------------------------------------------------------------------      -->
+
+    <script language="javascript"> 
+    function pritisnuto(){
+        alert("dugme je pritisnuto!")
+        vred1=document.forma.b1.value-0
+        vred2=document.forma.b2.value-0
+        vred = vred1-vred2
+        document.forma.rez.value= vred
+    }
+    function promenaTxt(){
+        
+        alert("ne menjaj rez" + vred)
+    }
+    function kuki(){
+        ime = document.forma.ime.value
+        vred = document.forma.vrednost.value
+        kuki = ime + "=" + vred
+        document.cookie = kuki
+    }
+    function citajkuki(){
+        kuki = document.cookie
+        alert(kuki)
+    }
+
+    </script>
+    <form name="forma">
+        <input type = "button" value="oduzmi prvi od drugog" onClick="pritisnuto()" >
+
+        <input type="text" name= "b1">
+        <input type="text" name= "b2" >
+        <input type="text" name= "rez" onChange="promenaTxt()">
+        <br>
+        sekcija za kukija
+        <br>
+        <input type="text " name="ime">
+        <input type="text" name="vrednost">
+        <br>
+        
+        <input type="button" value="upisi kuki"name="dug" onclick="kuki()">
+        <input type="button" value ="ispisi kuki"name="dug2" onclick="citajkuki()">
+    </form>
+</body>
+</html>
+

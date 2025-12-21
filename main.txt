@@ -1,0 +1,231 @@
+#include "xparameters.h"
+
+#include <xil_printf.h>
+#include <xstatus.h>
+#include <stdlib.h>
+
+#include "xaxidma.h"
+#include "xinterrupt_wrap.h"
+
+#include <xil_cache.h>
+
+#include "xil_util.h"
+
+#define MAX_PKT_LEN		      512
+#define POLL_TIMEOUT_COUNTER  2*MAX_PKT_LEN
+#define NUM_CONFIG_PARAMS     2
+
+static int CheckData(s8* TxBuffer, s16* RxBuffer, int Length, s8 CoeffA, s8 CoeffB);
+static void TxIntrHandler(void *Callback);
+static void RxIntrHandler(void *Callback);
+
+static XAxiDma AxiDma;
+
+volatile u32 TxDone;
+volatile u32 RxDone;
+
+int main(void)
+{
+	int Status;
+	int Index;
+
+    s8 Value;
+
+	s8  *TxBufferPtr;
+	s16 *RxBufferPtr;
+
+    s8 CoeffA, CoeffB;
+
+    XAxiDma_Config *AxiDmaConfigPtr;
+
+    xil_printf("\r\n--- Entering main() --- \r\n");
+
+    /* Input and output buffer allocation */    
+    TxBufferPtr = (s8*) malloc(MAX_PKT_LEN + NUM_CONFIG_PARAMS);
+    if (TxBufferPtr == NULL) {
+        xil_printf("ERROR: Cannot allocate TX buffer\r\n");
+        return XST_FAILURE;
+    }
+    xil_printf("\r\n TX buffer address: %x \r\n", TxBufferPtr);
+	
+    RxBufferPtr = (s16*) malloc(MAX_PKT_LEN*sizeof(s16));
+    if (RxBufferPtr == NULL) {
+        xil_printf("ERROR: Cannot allocate RX buffer\r\n");
+        return XST_FAILURE;
+    }
+    xil_printf("\r\n RX buffer address: %x \r\n\n", RxBufferPtr);     
+
+	/* DMA configuration */
+	AxiDmaConfigPtr = XAxiDma_LookupConfig(XPAR_XAXIDMA_0_BASEADDR);
+	if (!AxiDmaConfigPtr) {
+		xil_printf("ERROR: No config found for %d\r\n", XPAR_XAXIDMA_0_BASEADDR);
+
+		return XST_FAILURE;
+	}
+
+	Status = XAxiDma_CfgInitialize(&AxiDma, AxiDmaConfigPtr);
+	if (Status != XST_SUCCESS) {
+		xil_printf("ERROR: DMA initialization failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	if (XAxiDma_HasSg(&AxiDma)) {
+		xil_printf("ERROR: DMA configure in SG mode \r\n");
+		return XST_FAILURE;
+	}
+
+	/* Configure DMA interrupts */
+	Status = XSetupInterruptSystem(&AxiDma, &TxIntrHandler,
+				                  AxiDmaConfigPtr->IntrId[0], AxiDmaConfigPtr->IntrParent,
+				                  XINTERRUPT_DEFAULT_PRIORITY);
+	if (Status != XST_SUCCESS) {
+        xil_printf("ERROR: Cannot configure DMA TX interrupt\r\n");
+		return XST_FAILURE;
+	}
+
+	Status = XSetupInterruptSystem(&AxiDma, &RxIntrHandler,
+				                   AxiDmaConfigPtr->IntrId[1], AxiDmaConfigPtr->IntrParent,
+				                   XINTERRUPT_DEFAULT_PRIORITY);
+	if (Status != XST_SUCCESS) {
+        xil_printf("ERROR: Cannot configure DMA RX interrupt\r\n");
+		return XST_FAILURE;
+	}
+
+	XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+	XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+
+	/* Initialize flags and function parameters before test  */
+	TxDone = 0;
+	RxDone = 0;
+
+    CoeffA = 100;
+    CoeffB = -20;
+  
+    /* Generate input data */
+    Value = 0;
+    TxBufferPtr[0] = CoeffA;
+    TxBufferPtr[1] = CoeffB;   
+    for (Index = 0; Index < MAX_PKT_LEN; Index ++) {
+        TxBufferPtr[Index + NUM_CONFIG_PARAMS] = Value;
+		Value = (Value + 1) & 0xFF;
+    }
+
+    /* Flush TX buffer before DMA transfer to make sure that DDR and Cache are in sync */
+	Xil_DCacheFlushRange((UINTPTR)TxBufferPtr, MAX_PKT_LEN + NUM_CONFIG_PARAMS);
+    Xil_DCacheFlushRange((UINTPTR)RxBufferPtr, MAX_PKT_LEN*sizeof(RxBufferPtr[0]));
+
+	/* Start DMA tranfers */
+	Status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR) RxBufferPtr, 
+                                    MAX_PKT_LEN*sizeof(RxBufferPtr[0]), XAXIDMA_DEVICE_TO_DMA);
+	if (Status != XST_SUCCESS) {
+        xil_printf("ERROR: Starting RX DMA failed %d\r\n", Status);
+        return XST_FAILURE;
+	}
+
+	Status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR) TxBufferPtr, 
+                                    MAX_PKT_LEN + NUM_CONFIG_PARAMS, XAXIDMA_DMA_TO_DEVICE);
+	if (Status != XST_SUCCESS) {
+        xil_printf("ERROR: Starting TX DMA failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+
+	/* Wait for TX done or timeout */
+	Status = Xil_WaitForEventSet(POLL_TIMEOUT_COUNTER, 1, &TxDone);
+	if (Status != XST_SUCCESS) {
+		xil_printf("ERROR: Transmit failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+    xil_printf("Transmit done\r\n");
+
+	/* Wait for RX done or timeout */
+	Status = Xil_WaitForEventSet(POLL_TIMEOUT_COUNTER, 1, &RxDone);
+	if (Status != XST_SUCCESS) {
+		xil_printf("ERROR: Receive failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+    xil_printf("Receive done\r\n");
+
+	/* Check data */
+	Status = CheckData(TxBufferPtr + NUM_CONFIG_PARAMS, RxBufferPtr, MAX_PKT_LEN, CoeffA, CoeffB);
+	if (Status != XST_SUCCESS) {
+		xil_printf("ERROR: Data check failed\r\n");
+		return XST_FAILURE;
+	}
+
+    xil_printf("Data check OK\r\n");    
+
+	xil_printf("\r\nSuccessfully ran linear function accelerator test\r\n");
+
+	/* Disable TX and RX interrupts and free allocated memory */
+	XDisconnectInterruptCntrl(AxiDmaConfigPtr->IntrId[0], AxiDmaConfigPtr->IntrParent);
+	XDisconnectInterruptCntrl(AxiDmaConfigPtr->IntrId[1], AxiDmaConfigPtr->IntrParent);
+
+    free(TxBufferPtr);
+    free(RxBufferPtr);
+
+	xil_printf("\r\n--- Exiting main() --- \r\n");
+
+	return XST_SUCCESS;
+}
+
+static int CheckData(s8* TxBuffer, s16* RxBuffer, int Length, s8 CoeffA, s8 CoeffB)
+{
+	int Index = 0;
+    s16 RefOutput;
+
+	/* Invalidate RxBuffer to force read newest values from DDR */
+	Xil_DCacheInvalidateRange((UINTPTR)RxBuffer, Length*sizeof(RxBuffer[0]));
+
+	for (Index = 0; Index < Length; Index++) {
+        RefOutput = CoeffA*TxBuffer[Index] + CoeffB;
+		if (RxBuffer[Index] != RefOutput) {
+			xil_printf("DATA CHECK ERROR: Index: %d Received %d instead of %d\r\n",
+				                                        Index, RxBuffer[Index], RefOutput);
+
+			return XST_FAILURE;
+		}
+	}
+
+	return XST_SUCCESS;
+}
+
+static void TxIntrHandler(void *Callback)
+{
+	u32 IrqStatus;
+	XAxiDma *AxiDmaInst = (XAxiDma *)Callback;
+
+	/* Read pending interrupts */
+	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DMA_TO_DEVICE);
+
+	/* Acknowledge pending interrupts */
+	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DMA_TO_DEVICE);
+
+	/* Set TX done only if transmit chain is completed */
+	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK))
+    {
+		TxDone = 1;
+	}
+
+    return;
+}
+
+static void RxIntrHandler(void *Callback)
+{
+	u32 IrqStatus;
+	XAxiDma *AxiDmaInst = (XAxiDma *)Callback;
+
+	/* Read pending interrupts */
+	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
+
+	/* Acknowledge pending interrupts */
+	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
+
+	/* Set RX done only if receive chain is completed */
+	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK))
+    {
+		RxDone = 1;
+	}
+
+    return;
+}
