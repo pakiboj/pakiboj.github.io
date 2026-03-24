@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sun Mar 22 15:57:13 2026
+# Process ID: 6548
+# Current directory: C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_xbar_0_synth_1
+# Command line: vivado.exe -log ImageFilter_xbar_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ImageFilter_xbar_0.tcl
+# Log file: C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_xbar_0_synth_1/ImageFilter_xbar_0.vds
+# Journal file: C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_xbar_0_synth_1\vivado.jou
+# Running On        :DESKTOP-BV4G26R
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19045
+# Processor Detail  :Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz
+# CPU Frequency     :1190 MHz
+# CPU Physical cores:4
+# CPU Logical cores :8
+# Host memory       :8262 MB
+# Swap memory       :8795 MB
+# Total Virtual     :17058 MB
+# Available Virtual :5063 MB
+#-----------------------------------------------------------
+source ImageFilter_xbar_0.tcl -notrace

@@ -1,0 +1,18 @@
+# syntax=docker/dockerfile:1
+
+FROM quay.io/jupyter/base-notebook
+
+COPY oe3dosRequirements.txt .
+
+RUN pip install --upgrade pip setuptools wheel
+
+RUN pip install --no-cache-dir -r oe3dosRequirements.txt --upgrade
+
+USER root
+RUN apt-get update && apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra dvipng cm-super
+USER $NB_UID
+
+
+COPY . .
+
+CMD ["echo", "localhost:8889/lab?token=my-token"]

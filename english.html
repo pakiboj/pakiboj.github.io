@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVS sajt za izradu projekta</title>
+</head>
+
+<link rel="stylesheet" type="text/css" href="styles/dvs.css" />
+<link rel="stylesheet" type="text/css" href="styles/icons.css" />
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<body >
+
+    <h1>
+        <a href="index.html" target = "_blank"> СРБ</a>
+    </h1>
+    
+    <h2> </h2>
+    <div class="linkovi">
+        <!-- <a href="../index.html">Povratak na prvu stranicu</a> </div>-->
+
+    
+    <div id="header"> Михајло Павловић ЦВ </div>
+    
+    <div style="text-align: left;" id="content"> Izrada projekta 
+  
+    </div>
+
+    <div style="text-align: left;" id="reklame"> Kutak za muziku
+        <br>
+        <br>
+        <audio id="player" controls></audio> <br>
+        <script src="scripts/player.js"></script>
+
+        <button id="playpause" class="icon" onclick="playPauseAudio()"></button>
+
+        <button id="next" class="icon" onclick="Next()"></button> <br>
+
+        <h2 id="riff"> KLIKNI NA DUGME I</h2>
+        <h2 id="riff"> PRESKOČI NA MNOGO DOBAR RIFF</h2>
+        <button id="riff" class="icon" onclick="Riff()"></button>
+    </div>
+
+
+
+    <div style="text-align: left; background-color: rgba(184, 167, 167, 0.6);" id="Messagebox"> Ostavite nam poruku
+        <form id="contact-form">
+        <input
+            type="text"
+            name="name"
+            placeholder="Vaše ime"
+            required
+            style="padding: 10px 50px;"
+        />
+
+        <br>
+
+        <textarea
+            name="message"
+            placeholder="Poruka"
+            rows="10"
+            cols="30"
+            required
+            style="padding: 50px 160px;"
+            
+        ></textarea>
+
+        <br><br>
+
+        <button type="submit">Send</button>
+        </form>
+
+        <script>
+        // Initialize EmailJS with your public key
+        (function() {
+            emailjs.init({
+                publicKey: "oz1vCSXNWIjjO-kOM"
+            });
+        })();
+
+        // Wait for DOM to load
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("contact-form");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                // Send email using EmailJS
+                emailjs.sendForm(
+                    "service_av6muak",    // Your service ID
+                    "template_6k56kfe",   // Your template ID
+                    this                  // The form element
+                )
+                .then(() => {
+                    alert("Message sent successfully!");
+                    form.reset();
+                })
+                .catch((error) => {
+                    console.error("EmailJS Error:", error);
+                    alert("Failed to send message. Error: " + error.text);
+                });
+            });
+        });
+        </script>
+    </div>
+
+
+
+
+
+
+
+    <!-- FOOTER -->
+<footer class="footer">
+    <p><b>Studenti:</b><br>
+    Mihajlo Pavlović 21/0343<br>
+    Jovan Jeremić 16/0554</p>
+
+    <p><b>Profesori:</b><br>
+    doc. dr Jelena Popović-Božović (jelena@etf.bg.ac.rs)<br>
+    doc. dr Dragomir El Mezeni (elmezeni@etf.bg.ac.rs)</p>
+</footer>
+
+</body>
+</html>

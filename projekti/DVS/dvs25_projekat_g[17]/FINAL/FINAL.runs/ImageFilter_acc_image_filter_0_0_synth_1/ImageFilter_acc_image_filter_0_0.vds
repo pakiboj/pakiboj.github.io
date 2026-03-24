@@ -1,0 +1,1022 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sun Mar 22 15:48:19 2026
+# Process ID: 4752
+# Current directory: C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_acc_image_filter_0_0_synth_1
+# Command line: vivado.exe -log ImageFilter_acc_image_filter_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ImageFilter_acc_image_filter_0_0.tcl
+# Log file: C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_acc_image_filter_0_0_synth_1/ImageFilter_acc_image_filter_0_0.vds
+# Journal file: C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_acc_image_filter_0_0_synth_1\vivado.jou
+# Running On        :DESKTOP-BV4G26R
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19045
+# Processor Detail  :Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz
+# CPU Frequency     :1190 MHz
+# CPU Physical cores:4
+# CPU Logical cores :8
+# Host memory       :8262 MB
+# Swap memory       :8262 MB
+# Total Virtual     :16525 MB
+# Available Virtual :6739 MB
+#-----------------------------------------------------------
+source ImageFilter_acc_image_filter_0_0.tcl -notrace
+create_project: Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 491.953 ; gain = 194.207
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2024.1/data/ip'.
+Command: synth_design -top ImageFilter_acc_image_filter_0_0 -part xc7z020clg400-1 -incremental_mode off -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Device 21-9227] Part: xc7z020clg400-1 does not have CEAM library.
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 3308
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:22 ; elapsed = 00:00:31 . Memory (MB): peak = 1384.281 ; gain = 446.078
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'ImageFilter_acc_image_filter_0_0' [c:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.gen/sources_1/bd/ImageFilter/ip/ImageFilter_acc_image_filter_0_0/synth/ImageFilter_acc_image_filter_0_0.vhd:90]
+	Parameter C_MAX_IMG_WIDTH bound to: 512 - type: integer 
+	Parameter C_MAX_RADIOUS bound to: 4 - type: integer 
+	Parameter C_RADIUS bound to: 1 - type: integer 
+	Parameter C_IMG_SIZE bound to: 128 - type: integer 
+	Parameter G_S_AXI_LITE_ADDR_WIDTH bound to: 9 - type: integer 
+	Parameter G_S_AXI_LITE_DATA_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-3491] module 'acc_image_filter' declared at 'C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/acc_image_filter.vhd:35' bound to instance 'U0' of component 'acc_image_filter' [c:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.gen/sources_1/bd/ImageFilter/ip/ImageFilter_acc_image_filter_0_0/synth/ImageFilter_acc_image_filter_0_0.vhd:180]
+INFO: [Synth 8-638] synthesizing module 'acc_image_filter' [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/acc_image_filter.vhd:97]
+INFO: [Synth 8-638] synthesizing module 'axi_registers' [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_registers.vhd:89]
+INFO: [Synth 8-256] done synthesizing module 'axi_registers' (0#1) [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_registers.vhd:89]
+INFO: [Synth 8-638] synthesizing module 'axi_image_block' [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_image_block.vhd:78]
+INFO: [Synth 8-638] synthesizing module 'BRAM' [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/BRAM.vhd:41]
+INFO: [Synth 8-256] done synthesizing module 'BRAM' (0#1) [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/BRAM.vhd:41]
+WARNING: [Synth 8-614] signal 'first_row_index' is read in the process but is not in the sensitivity list [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_image_block.vhd:296]
+INFO: [Synth 8-256] done synthesizing module 'axi_image_block' (0#1) [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_image_block.vhd:78]
+INFO: [Synth 8-256] done synthesizing module 'acc_image_filter' (0#1) [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/acc_image_filter.vhd:97]
+INFO: [Synth 8-256] done synthesizing module 'ImageFilter_acc_image_filter_0_0' (0#1) [c:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.gen/sources_1/bd/ImageFilter/ip/ImageFilter_acc_image_filter_0_0/synth/ImageFilter_acc_image_filter_0_0.vhd:90]
+WARNING: [Synth 8-6014] Unused sequential element first_col_index_reg was removed.  [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_image_block.vhd:270]
+WARNING: [Synth 8-6014] Unused sequential element ready_reg was removed.  [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/acc_image_filter.vhd:330]
+WARNING: [Synth 8-6014] Unused sequential element pixel_low_valid_reg was removed.  [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/acc_image_filter.vhd:666]
+WARNING: [Synth 8-7129] Port img_width[15] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_width[14] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_width[13] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_width[12] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_width[11] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_width[10] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_height[15] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_height[14] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_height[13] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_height[12] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_height[11] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port img_height[10] in module axi_image_block is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_awprot[2] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_awprot[1] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_awprot[0] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[31] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[30] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[29] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[28] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[27] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[26] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[25] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[24] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[23] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[22] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[21] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[20] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[19] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[18] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[17] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wdata[16] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wstrb[3] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_wstrb[2] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_arprot[2] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_arprot[1] in module axi_registers is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_lite_arprot[0] in module axi_registers is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:46 ; elapsed = 00:00:59 . Memory (MB): peak = 1863.973 ; gain = 925.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:49 ; elapsed = 00:01:01 . Memory (MB): peak = 1863.973 ; gain = 925.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:49 ; elapsed = 00:01:01 . Memory (MB): peak = 1863.973 ; gain = 925.770
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1863.973 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 1972.199 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1981.824 ; gain = 9.625
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:01:39 ; elapsed = 00:01:54 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:01:39 ; elapsed = 00:01:54 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:01:39 ; elapsed = 00:01:54 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'fsm_axi_write_state_reg' in module 'axi_registers'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                             0001 |                               00
+*
+            writeaddress |                             0010 |                               01
+               writedata |                             0100 |                               10
+            writestalled |                             1000 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'fsm_axi_write_state_reg' using encoding 'one-hot' in module 'axi_registers'
+WARNING: [Synth 8-327] inferring latch for variable 'input_data_reg' [C:/MIHAJLO/faks/dvs/projekat/FINAL/FINALFINALFINAL/axi_image_block.vhd:1079]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:04 ; elapsed = 00:02:20 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 66    
+	   2 Input   10 Bit       Adders := 10    
++---Registers : 
+	               64 Bit    Registers := 2     
+	               48 Bit    Registers := 1     
+	               32 Bit    Registers := 146   
+	               25 Bit    Registers := 24    
+	               16 Bit    Registers := 686   
+	               12 Bit    Registers := 2     
+	               10 Bit    Registers := 14    
+	                9 Bit    Registers := 2     
+	                8 Bit    Registers := 166   
+	                1 Bit    Registers := 28    
++---Multipliers : 
+	              16x48  Multipliers := 1     
++---Muxes : 
+	   2 Input   16 Bit        Muxes := 97    
+	   2 Input   10 Bit        Muxes := 28    
+	   2 Input    8 Bit        Muxes := 1115  
+	   5 Input    8 Bit        Muxes := 240   
+	   6 Input    8 Bit        Muxes := 86    
+	   2 Input    7 Bit        Muxes := 2     
+	   4 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 2     
+	   5 Input    2 Bit        Muxes := 4     
+	   2 Input    2 Bit        Muxes := 12    
+	   5 Input    1 Bit        Muxes := 24    
+	   2 Input    1 Bit        Muxes := 97    
+	   4 Input    1 Bit        Muxes := 7     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP mult_reg[8], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[8] is absorbed into DSP mult_reg[8].
+DSP Report: operator ARG is absorbed into DSP mult_reg[8].
+DSP Report: Generating DSP mult_reg[24], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[24] is absorbed into DSP mult_reg[24].
+DSP Report: operator ARG is absorbed into DSP mult_reg[24].
+DSP Report: Generating DSP mult_reg[48], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[48] is absorbed into DSP mult_reg[48].
+DSP Report: operator ARG is absorbed into DSP mult_reg[48].
+DSP Report: Generating DSP mult_reg[80], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[80] is absorbed into DSP mult_reg[80].
+DSP Report: operator ARG is absorbed into DSP mult_reg[80].
+DSP Report: Generating DSP mult_reg[6], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[6] is absorbed into DSP mult_reg[6].
+DSP Report: operator ARG is absorbed into DSP mult_reg[6].
+DSP Report: Generating DSP a11_reg[3]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[7] is absorbed into DSP a11_reg[3]0.
+DSP Report: operator ARG is absorbed into DSP a11_reg[3]0.
+DSP Report: operator a11_reg[3]0 is absorbed into DSP a11_reg[3]0.
+DSP Report: Generating DSP mult_reg[4], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[4] is absorbed into DSP mult_reg[4].
+DSP Report: operator ARG is absorbed into DSP mult_reg[4].
+DSP Report: Generating DSP a11_reg[2]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[5] is absorbed into DSP a11_reg[2]0.
+DSP Report: operator ARG is absorbed into DSP a11_reg[2]0.
+DSP Report: operator a11_reg[2]0 is absorbed into DSP a11_reg[2]0.
+DSP Report: Generating DSP mult_reg[2], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[2] is absorbed into DSP mult_reg[2].
+DSP Report: operator ARG is absorbed into DSP mult_reg[2].
+DSP Report: Generating DSP a11_reg[1]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[3] is absorbed into DSP a11_reg[1]0.
+DSP Report: operator ARG is absorbed into DSP a11_reg[1]0.
+DSP Report: operator a11_reg[1]0 is absorbed into DSP a11_reg[1]0.
+DSP Report: Generating DSP mult_reg[0], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[0] is absorbed into DSP mult_reg[0].
+DSP Report: operator ARG is absorbed into DSP mult_reg[0].
+DSP Report: Generating DSP a11_reg[0]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[1] is absorbed into DSP a11_reg[0]0.
+DSP Report: operator ARG is absorbed into DSP a11_reg[0]0.
+DSP Report: operator a11_reg[0]0 is absorbed into DSP a11_reg[0]0.
+DSP Report: Generating DSP mult_reg[22], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[22] is absorbed into DSP mult_reg[22].
+DSP Report: operator ARG is absorbed into DSP mult_reg[22].
+DSP Report: Generating DSP a21_reg[11]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[23] is absorbed into DSP a21_reg[11]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[11]0.
+DSP Report: operator a21_reg[11]0 is absorbed into DSP a21_reg[11]0.
+DSP Report: Generating DSP mult_reg[20], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[20] is absorbed into DSP mult_reg[20].
+DSP Report: operator ARG is absorbed into DSP mult_reg[20].
+DSP Report: Generating DSP a21_reg[10]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[21] is absorbed into DSP a21_reg[10]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[10]0.
+DSP Report: operator a21_reg[10]0 is absorbed into DSP a21_reg[10]0.
+DSP Report: Generating DSP mult_reg[18], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[18] is absorbed into DSP mult_reg[18].
+DSP Report: operator ARG is absorbed into DSP mult_reg[18].
+DSP Report: Generating DSP a21_reg[9]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[19] is absorbed into DSP a21_reg[9]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[9]0.
+DSP Report: operator a21_reg[9]0 is absorbed into DSP a21_reg[9]0.
+DSP Report: Generating DSP mult_reg[16], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[16] is absorbed into DSP mult_reg[16].
+DSP Report: operator ARG is absorbed into DSP mult_reg[16].
+DSP Report: Generating DSP a21_reg[8]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[17] is absorbed into DSP a21_reg[8]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[8]0.
+DSP Report: operator a21_reg[8]0 is absorbed into DSP a21_reg[8]0.
+DSP Report: Generating DSP mult_reg[14], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[14] is absorbed into DSP mult_reg[14].
+DSP Report: operator ARG is absorbed into DSP mult_reg[14].
+DSP Report: Generating DSP a21_reg[7]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[15] is absorbed into DSP a21_reg[7]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[7]0.
+DSP Report: operator a21_reg[7]0 is absorbed into DSP a21_reg[7]0.
+DSP Report: Generating DSP mult_reg[12], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[12] is absorbed into DSP mult_reg[12].
+DSP Report: operator ARG is absorbed into DSP mult_reg[12].
+DSP Report: Generating DSP a21_reg[6]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[13] is absorbed into DSP a21_reg[6]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[6]0.
+DSP Report: operator a21_reg[6]0 is absorbed into DSP a21_reg[6]0.
+DSP Report: Generating DSP mult_reg[10], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[10] is absorbed into DSP mult_reg[10].
+DSP Report: operator ARG is absorbed into DSP mult_reg[10].
+DSP Report: Generating DSP a21_reg[5]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[11] is absorbed into DSP a21_reg[5]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[5]0.
+DSP Report: operator a21_reg[5]0 is absorbed into DSP a21_reg[5]0.
+DSP Report: Generating DSP a21_reg[4]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[9] is absorbed into DSP a21_reg[4]0.
+DSP Report: operator ARG is absorbed into DSP a21_reg[4]0.
+DSP Report: operator a21_reg[4]0 is absorbed into DSP a21_reg[4]0.
+DSP Report: Generating DSP mult_reg[46], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[46] is absorbed into DSP mult_reg[46].
+DSP Report: operator ARG is absorbed into DSP mult_reg[46].
+DSP Report: Generating DSP a31_reg[23]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[47] is absorbed into DSP a31_reg[23]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[23]0.
+DSP Report: operator a31_reg[23]0 is absorbed into DSP a31_reg[23]0.
+DSP Report: Generating DSP mult_reg[44], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[44] is absorbed into DSP mult_reg[44].
+DSP Report: operator ARG is absorbed into DSP mult_reg[44].
+DSP Report: Generating DSP a31_reg[22]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[45] is absorbed into DSP a31_reg[22]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[22]0.
+DSP Report: operator a31_reg[22]0 is absorbed into DSP a31_reg[22]0.
+DSP Report: Generating DSP mult_reg[42], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[42] is absorbed into DSP mult_reg[42].
+DSP Report: operator ARG is absorbed into DSP mult_reg[42].
+DSP Report: Generating DSP a31_reg[21]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[43] is absorbed into DSP a31_reg[21]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[21]0.
+DSP Report: operator a31_reg[21]0 is absorbed into DSP a31_reg[21]0.
+DSP Report: Generating DSP mult_reg[40], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[40] is absorbed into DSP mult_reg[40].
+DSP Report: operator ARG is absorbed into DSP mult_reg[40].
+DSP Report: Generating DSP a31_reg[20]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[41] is absorbed into DSP a31_reg[20]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[20]0.
+DSP Report: operator a31_reg[20]0 is absorbed into DSP a31_reg[20]0.
+DSP Report: Generating DSP mult_reg[38], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[38] is absorbed into DSP mult_reg[38].
+DSP Report: operator ARG is absorbed into DSP mult_reg[38].
+DSP Report: Generating DSP a31_reg[19]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[39] is absorbed into DSP a31_reg[19]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[19]0.
+DSP Report: operator a31_reg[19]0 is absorbed into DSP a31_reg[19]0.
+DSP Report: Generating DSP mult_reg[36], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[36] is absorbed into DSP mult_reg[36].
+DSP Report: operator ARG is absorbed into DSP mult_reg[36].
+DSP Report: Generating DSP a31_reg[18]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[37] is absorbed into DSP a31_reg[18]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[18]0.
+DSP Report: operator a31_reg[18]0 is absorbed into DSP a31_reg[18]0.
+DSP Report: Generating DSP mult_reg[34], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[34] is absorbed into DSP mult_reg[34].
+DSP Report: operator ARG is absorbed into DSP mult_reg[34].
+DSP Report: Generating DSP a31_reg[17]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[35] is absorbed into DSP a31_reg[17]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[17]0.
+DSP Report: operator a31_reg[17]0 is absorbed into DSP a31_reg[17]0.
+DSP Report: Generating DSP mult_reg[32], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[32] is absorbed into DSP mult_reg[32].
+DSP Report: operator ARG is absorbed into DSP mult_reg[32].
+DSP Report: Generating DSP a31_reg[16]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[33] is absorbed into DSP a31_reg[16]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[16]0.
+DSP Report: operator a31_reg[16]0 is absorbed into DSP a31_reg[16]0.
+DSP Report: Generating DSP mult_reg[30], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[30] is absorbed into DSP mult_reg[30].
+DSP Report: operator ARG is absorbed into DSP mult_reg[30].
+DSP Report: Generating DSP a31_reg[15]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[31] is absorbed into DSP a31_reg[15]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[15]0.
+DSP Report: operator a31_reg[15]0 is absorbed into DSP a31_reg[15]0.
+DSP Report: Generating DSP mult_reg[28], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[28] is absorbed into DSP mult_reg[28].
+DSP Report: operator ARG is absorbed into DSP mult_reg[28].
+DSP Report: Generating DSP a31_reg[14]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[29] is absorbed into DSP a31_reg[14]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[14]0.
+DSP Report: operator a31_reg[14]0 is absorbed into DSP a31_reg[14]0.
+DSP Report: Generating DSP mult_reg[26], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[26] is absorbed into DSP mult_reg[26].
+DSP Report: operator ARG is absorbed into DSP mult_reg[26].
+DSP Report: Generating DSP a31_reg[13]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[27] is absorbed into DSP a31_reg[13]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[13]0.
+DSP Report: operator a31_reg[13]0 is absorbed into DSP a31_reg[13]0.
+DSP Report: Generating DSP a31_reg[12]0, operation Mode is: PCIN+(A*B)'.
+DSP Report: register mult_reg[25] is absorbed into DSP a31_reg[12]0.
+DSP Report: operator ARG is absorbed into DSP a31_reg[12]0.
+DSP Report: operator a31_reg[12]0 is absorbed into DSP a31_reg[12]0.
+DSP Report: Generating DSP mult_reg[78], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[78] is absorbed into DSP mult_reg[78].
+DSP Report: operator ARG is absorbed into DSP mult_reg[78].
+DSP Report: Generating DSP a41_reg[39], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[39] is absorbed into DSP a41_reg[39].
+DSP Report: register mult_reg[79] is absorbed into DSP a41_reg[39].
+DSP Report: operator a41_reg[39]0 is absorbed into DSP a41_reg[39].
+DSP Report: operator ARG is absorbed into DSP a41_reg[39].
+DSP Report: Generating DSP mult_reg[76], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[76] is absorbed into DSP mult_reg[76].
+DSP Report: operator ARG is absorbed into DSP mult_reg[76].
+DSP Report: Generating DSP a41_reg[38], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[38] is absorbed into DSP a41_reg[38].
+DSP Report: register mult_reg[77] is absorbed into DSP a41_reg[38].
+DSP Report: operator a41_reg[38]0 is absorbed into DSP a41_reg[38].
+DSP Report: operator ARG is absorbed into DSP a41_reg[38].
+DSP Report: Generating DSP a42_reg[19], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[19] is absorbed into DSP a42_reg[19].
+DSP Report: operator a42_reg[19]0 is absorbed into DSP a42_reg[19].
+DSP Report: Generating DSP mult_reg[74], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[74] is absorbed into DSP mult_reg[74].
+DSP Report: operator ARG is absorbed into DSP mult_reg[74].
+DSP Report: Generating DSP a41_reg[37], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[37] is absorbed into DSP a41_reg[37].
+DSP Report: register mult_reg[75] is absorbed into DSP a41_reg[37].
+DSP Report: operator a41_reg[37]0 is absorbed into DSP a41_reg[37].
+DSP Report: operator ARG is absorbed into DSP a41_reg[37].
+DSP Report: Generating DSP mult_reg[72], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[72] is absorbed into DSP mult_reg[72].
+DSP Report: operator ARG is absorbed into DSP mult_reg[72].
+DSP Report: Generating DSP a41_reg[36], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[36] is absorbed into DSP a41_reg[36].
+DSP Report: register mult_reg[73] is absorbed into DSP a41_reg[36].
+DSP Report: operator a41_reg[36]0 is absorbed into DSP a41_reg[36].
+DSP Report: operator ARG is absorbed into DSP a41_reg[36].
+DSP Report: Generating DSP a42_reg[18], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[18] is absorbed into DSP a42_reg[18].
+DSP Report: operator a42_reg[18]0 is absorbed into DSP a42_reg[18].
+DSP Report: Generating DSP a43_reg[9], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a43_reg[9] is absorbed into DSP a43_reg[9].
+DSP Report: operator a43_reg[9]0 is absorbed into DSP a43_reg[9].
+DSP Report: Generating DSP mult_reg[70], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[70] is absorbed into DSP mult_reg[70].
+DSP Report: operator ARG is absorbed into DSP mult_reg[70].
+DSP Report: Generating DSP a41_reg[35], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[35] is absorbed into DSP a41_reg[35].
+DSP Report: register mult_reg[71] is absorbed into DSP a41_reg[35].
+DSP Report: operator a41_reg[35]0 is absorbed into DSP a41_reg[35].
+DSP Report: operator ARG is absorbed into DSP a41_reg[35].
+DSP Report: Generating DSP mult_reg[68], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[68] is absorbed into DSP mult_reg[68].
+DSP Report: operator ARG is absorbed into DSP mult_reg[68].
+DSP Report: Generating DSP a41_reg[34], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[34] is absorbed into DSP a41_reg[34].
+DSP Report: register mult_reg[69] is absorbed into DSP a41_reg[34].
+DSP Report: operator a41_reg[34]0 is absorbed into DSP a41_reg[34].
+DSP Report: operator ARG is absorbed into DSP a41_reg[34].
+DSP Report: Generating DSP a42_reg[17], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[17] is absorbed into DSP a42_reg[17].
+DSP Report: operator a42_reg[17]0 is absorbed into DSP a42_reg[17].
+DSP Report: Generating DSP mult_reg[66], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[66] is absorbed into DSP mult_reg[66].
+DSP Report: operator ARG is absorbed into DSP mult_reg[66].
+DSP Report: Generating DSP a41_reg[33], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[33] is absorbed into DSP a41_reg[33].
+DSP Report: register mult_reg[67] is absorbed into DSP a41_reg[33].
+DSP Report: operator a41_reg[33]0 is absorbed into DSP a41_reg[33].
+DSP Report: operator ARG is absorbed into DSP a41_reg[33].
+DSP Report: Generating DSP mult_reg[64], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[64] is absorbed into DSP mult_reg[64].
+DSP Report: operator ARG is absorbed into DSP mult_reg[64].
+DSP Report: Generating DSP a41_reg[32], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[32] is absorbed into DSP a41_reg[32].
+DSP Report: register mult_reg[65] is absorbed into DSP a41_reg[32].
+DSP Report: operator a41_reg[32]0 is absorbed into DSP a41_reg[32].
+DSP Report: operator ARG is absorbed into DSP a41_reg[32].
+DSP Report: Generating DSP a42_reg[16], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[16] is absorbed into DSP a42_reg[16].
+DSP Report: operator a42_reg[16]0 is absorbed into DSP a42_reg[16].
+DSP Report: Generating DSP a43_reg[8], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a43_reg[8] is absorbed into DSP a43_reg[8].
+DSP Report: operator a43_reg[8]0 is absorbed into DSP a43_reg[8].
+DSP Report: Generating DSP a44_reg[4], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a44_reg[4] is absorbed into DSP a44_reg[4].
+DSP Report: operator a44_reg[4]0 is absorbed into DSP a44_reg[4].
+DSP Report: Generating DSP mult_reg[62], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[62] is absorbed into DSP mult_reg[62].
+DSP Report: operator ARG is absorbed into DSP mult_reg[62].
+DSP Report: Generating DSP a41_reg[31], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[31] is absorbed into DSP a41_reg[31].
+DSP Report: register mult_reg[63] is absorbed into DSP a41_reg[31].
+DSP Report: operator a41_reg[31]0 is absorbed into DSP a41_reg[31].
+DSP Report: operator ARG is absorbed into DSP a41_reg[31].
+DSP Report: Generating DSP mult_reg[60], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[60] is absorbed into DSP mult_reg[60].
+DSP Report: operator ARG is absorbed into DSP mult_reg[60].
+DSP Report: Generating DSP a41_reg[30], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[30] is absorbed into DSP a41_reg[30].
+DSP Report: register mult_reg[61] is absorbed into DSP a41_reg[30].
+DSP Report: operator a41_reg[30]0 is absorbed into DSP a41_reg[30].
+DSP Report: operator ARG is absorbed into DSP a41_reg[30].
+DSP Report: Generating DSP a42_reg[15], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[15] is absorbed into DSP a42_reg[15].
+DSP Report: operator a42_reg[15]0 is absorbed into DSP a42_reg[15].
+DSP Report: Generating DSP mult_reg[58], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[58] is absorbed into DSP mult_reg[58].
+DSP Report: operator ARG is absorbed into DSP mult_reg[58].
+DSP Report: Generating DSP a41_reg[29], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[29] is absorbed into DSP a41_reg[29].
+DSP Report: register mult_reg[59] is absorbed into DSP a41_reg[29].
+DSP Report: operator a41_reg[29]0 is absorbed into DSP a41_reg[29].
+DSP Report: operator ARG is absorbed into DSP a41_reg[29].
+DSP Report: Generating DSP mult_reg[56], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[56] is absorbed into DSP mult_reg[56].
+DSP Report: operator ARG is absorbed into DSP mult_reg[56].
+DSP Report: Generating DSP a41_reg[28], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[28] is absorbed into DSP a41_reg[28].
+DSP Report: register mult_reg[57] is absorbed into DSP a41_reg[28].
+DSP Report: operator a41_reg[28]0 is absorbed into DSP a41_reg[28].
+DSP Report: operator ARG is absorbed into DSP a41_reg[28].
+DSP Report: Generating DSP a42_reg[14], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[14] is absorbed into DSP a42_reg[14].
+DSP Report: operator a42_reg[14]0 is absorbed into DSP a42_reg[14].
+DSP Report: Generating DSP a43_reg[7], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a43_reg[7] is absorbed into DSP a43_reg[7].
+DSP Report: operator a43_reg[7]0 is absorbed into DSP a43_reg[7].
+DSP Report: Generating DSP mult_reg[54], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[54] is absorbed into DSP mult_reg[54].
+DSP Report: operator ARG is absorbed into DSP mult_reg[54].
+DSP Report: Generating DSP a41_reg[27], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[27] is absorbed into DSP a41_reg[27].
+DSP Report: register mult_reg[55] is absorbed into DSP a41_reg[27].
+DSP Report: operator a41_reg[27]0 is absorbed into DSP a41_reg[27].
+DSP Report: operator ARG is absorbed into DSP a41_reg[27].
+DSP Report: Generating DSP mult_reg[52], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[52] is absorbed into DSP mult_reg[52].
+DSP Report: operator ARG is absorbed into DSP mult_reg[52].
+DSP Report: Generating DSP a41_reg[26], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[26] is absorbed into DSP a41_reg[26].
+DSP Report: register mult_reg[53] is absorbed into DSP a41_reg[26].
+DSP Report: operator a41_reg[26]0 is absorbed into DSP a41_reg[26].
+DSP Report: operator ARG is absorbed into DSP a41_reg[26].
+DSP Report: Generating DSP a42_reg[13], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[13] is absorbed into DSP a42_reg[13].
+DSP Report: operator a42_reg[13]0 is absorbed into DSP a42_reg[13].
+DSP Report: Generating DSP mult_reg[50], operation Mode is: (A*B)'.
+DSP Report: register mult_reg[50] is absorbed into DSP mult_reg[50].
+DSP Report: operator ARG is absorbed into DSP mult_reg[50].
+DSP Report: Generating DSP a41_reg[25], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[25] is absorbed into DSP a41_reg[25].
+DSP Report: register mult_reg[51] is absorbed into DSP a41_reg[25].
+DSP Report: operator a41_reg[25]0 is absorbed into DSP a41_reg[25].
+DSP Report: operator ARG is absorbed into DSP a41_reg[25].
+DSP Report: Generating DSP a41_reg[24], operation Mode is: (PCIN+(A*B)')'.
+DSP Report: register a41_reg[24] is absorbed into DSP a41_reg[24].
+DSP Report: register mult_reg[49] is absorbed into DSP a41_reg[24].
+DSP Report: operator a41_reg[24]0 is absorbed into DSP a41_reg[24].
+DSP Report: operator ARG is absorbed into DSP a41_reg[24].
+DSP Report: Generating DSP a42_reg[12], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a42_reg[12] is absorbed into DSP a42_reg[12].
+DSP Report: operator a42_reg[12]0 is absorbed into DSP a42_reg[12].
+DSP Report: Generating DSP a43_reg[6], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a43_reg[6] is absorbed into DSP a43_reg[6].
+DSP Report: operator a43_reg[6]0 is absorbed into DSP a43_reg[6].
+DSP Report: Generating DSP a44_reg[3], operation Mode is: (PCIN+A:B)'.
+DSP Report: register a44_reg[3] is absorbed into DSP a44_reg[3].
+DSP Report: operator a44_reg[3]0 is absorbed into DSP a44_reg[3].
+DSP Report: Generating DSP scale_mult_reg, operation Mode is: (A*B2)'.
+DSP Report: register scale_mult_reg is absorbed into DSP scale_mult_reg.
+DSP Report: register scale_mult_reg is absorbed into DSP scale_mult_reg.
+DSP Report: operator scale_mult0 is absorbed into DSP scale_mult_reg.
+DSP Report: operator scale_mult0 is absorbed into DSP scale_mult_reg.
+DSP Report: Generating DSP scale_mult0, operation Mode is: A2*B.
+DSP Report: register scale_mult0 is absorbed into DSP scale_mult0.
+DSP Report: operator scale_mult0 is absorbed into DSP scale_mult0.
+DSP Report: operator scale_mult0 is absorbed into DSP scale_mult0.
+DSP Report: Generating DSP scale_mult_reg, operation Mode is: (PCIN>>17)+A2*B.
+DSP Report: register scale_mult_reg is absorbed into DSP scale_mult_reg.
+DSP Report: register scale_mult_reg is absorbed into DSP scale_mult_reg.
+DSP Report: operator scale_mult0 is absorbed into DSP scale_mult_reg.
+DSP Report: operator scale_mult0 is absorbed into DSP scale_mult_reg.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_fsm_axi_write_state_reg[0]) is unused and will be removed from module axi_registers.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:04:03 ; elapsed = 00:04:28 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+ Sort Area is acc_image_filter__GC0 scale_mult0_2d : 0 0 : 2322 4698 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 scale_mult0_2d : 0 1 : 2376 4698 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[62]_23 : 0 0 : 979 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[62]_23 : 0 1 : 1108 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[62]_23 : 0 2 : 127 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[62]_23 : 0 3 : 127 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[62]_23 : 0 4 : 127 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[78]_2c : 0 0 : 979 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[78]_2c : 0 1 : 1108 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[78]_2c : 0 2 : 127 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[78]_2c : 0 3 : 127 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[78]_2c : 0 4 : 127 2468 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[54]_1f : 0 0 : 979 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[54]_1f : 0 1 : 1108 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[54]_1f : 0 2 : 127 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[54]_1f : 0 3 : 127 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[70]_28 : 0 0 : 979 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[70]_28 : 0 1 : 1108 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[70]_28 : 0 2 : 127 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[70]_28 : 0 3 : 127 2341 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[50]_1c : 0 0 : 979 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[50]_1c : 0 1 : 1108 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[50]_1c : 0 2 : 127 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[58]_21 : 0 0 : 979 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[58]_21 : 0 1 : 1108 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[58]_21 : 0 2 : 127 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[66]_26 : 0 0 : 979 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[66]_26 : 0 1 : 1108 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[66]_26 : 0 2 : 127 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[74]_2a : 0 0 : 979 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[74]_2a : 0 1 : 1108 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[74]_2a : 0 2 : 127 2214 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[48]_1a : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[48]_1a : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[52]_1e : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[52]_1e : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[56]_20 : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[56]_20 : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[60]_22 : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[60]_22 : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[64]_25 : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[64]_25 : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[68]_27 : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[68]_27 : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[72]_29 : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[72]_29 : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[76]_2b : 0 0 : 979 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[76]_2b : 0 1 : 1108 2087 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[0]_0 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[0]_0 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[10]_7 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[10]_7 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[12]_8 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[12]_8 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[14]_9 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[14]_9 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[16]_a : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[16]_a : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[18]_b : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[18]_b : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[20]_c : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[20]_c : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[22]_d : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[22]_d : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[24]_e : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[24]_e : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[26]_f : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[26]_f : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[28]_10 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[28]_10 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[2]_3 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[2]_3 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[30]_11 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[30]_11 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[32]_12 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[32]_12 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[34]_13 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[34]_13 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[36]_14 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[36]_14 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[38]_15 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[38]_15 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[40]_16 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[40]_16 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[42]_17 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[42]_17 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[44]_18 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[44]_18 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[46]_19 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[46]_19 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[4]_4 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[4]_4 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[6]_5 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[6]_5 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[8]_6 : 0 0 : 979 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[8]_6 : 0 1 : 1076 2055 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 scale_mult_reg_30 : 0 0 : 1864 1864 : Used 1 time 0
+ Sort Area is acc_image_filter__GC0 mult_reg[80]_24 : 0 0 : 979 979 : Used 1 time 0
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++---------------------------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name                      | DSP Mapping     | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++---------------------------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A*B)'     | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A*B)'          | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+(A*B)')'  | 16     | 9      | -      | -      | 32     | 0    | 0    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'     | 14     | 18     | -      | -      | -1     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|ImageFilter_acc_image_filter_0_0 | (A*B2)'         | 16     | 14     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 1    | 0    | 
+|ImageFilter_acc_image_filter_0_0 | A2*B            | 18     | 16     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|ImageFilter_acc_image_filter_0_0 | (PCIN>>17)+A2*B | 18     | 16     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 1    | 
++---------------------------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:04:51 ; elapsed = 00:05:23 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:04:51 ; elapsed = 00:05:23 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:05:07 ; elapsed = 00:05:41 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:05:33 ; elapsed = 00:06:09 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:05:33 ; elapsed = 00:06:09 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:05:35 ; elapsed = 00:06:11 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:05:35 ; elapsed = 00:06:12 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:05:37 ; elapsed = 00:06:13 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:05:37 ; elapsed = 00:06:13 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++---------------------------------+-------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name                      | RTL Name                                  | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++---------------------------------+-------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|ImageFilter_acc_image_filter_0_0 | U0/mult8_d3_reg[30]                       | 3      | 25    | NO           | NO                 | YES               | 25     | 0       | 
+|ImageFilter_acc_image_filter_0_0 | U0/valid_delay_reg[8]                     | 9      | 1     | YES          | NO                 | YES               | 1      | 0       | 
+|ImageFilter_acc_image_filter_0_0 | U0/last_delay_reg[8]                      | 9      | 1     | YES          | NO                 | YES               | 1      | 0       | 
+|ImageFilter_acc_image_filter_0_0 | U0/AXI_IMAGE_BLOCK/BRAM1/ram_reg[127][15] | 128    | 16    | YES          | NO                 | YES               | 0      | 64      | 
+|ImageFilter_acc_image_filter_0_0 | U0/AXI_IMAGE_BLOCK/BRAM2/ram_reg[127][15] | 128    | 16    | YES          | NO                 | YES               | 0      | 64      | 
+|ImageFilter_acc_image_filter_0_0 | U0/AXI_IMAGE_BLOCK/BRAM3/ram_reg[127][15] | 128    | 16    | YES          | NO                 | YES               | 0      | 64      | 
+|ImageFilter_acc_image_filter_0_0 | U0/AXI_IMAGE_BLOCK/BRAM4/ram_reg[127][15] | 128    | 16    | YES          | NO                 | YES               | 0      | 64      | 
++---------------------------------+-------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++---------------------------------+-------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name                      | DSP Mapping       | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++---------------------------------+-------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | PCIN+(A'*B')'     | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 0    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (A'*B')'          | 30     | 8      | -      | -      | 25     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 0      | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+(A'*B')')'  | 30     | 8      | -      | -      | 32     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|acc_image_filter                 | (PCIN+A:B)'       | 30     | 18     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|ImageFilter_acc_image_filter_0_0 | (A'*B')'          | 30     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 1    | 
+|ImageFilter_acc_image_filter_0_0 | A'*B'             | 17     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|ImageFilter_acc_image_filter_0_0 | (PCIN>>17+A'*B')' | 17     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 1    | 
++---------------------------------+-------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |CARRY4  |   573|
+|2     |DSP48E1 |    98|
+|8     |LUT1    |    58|
+|9     |LUT2    |  2777|
+|10    |LUT3    |   182|
+|11    |LUT4    |   483|
+|12    |LUT5    |   618|
+|13    |LUT6    |  2141|
+|14    |MUXF7   |   195|
+|15    |MUXF8   |    80|
+|16    |SRL16E  |    27|
+|17    |SRLC32E |   256|
+|18    |FDRE    |  6791|
+|19    |FDSE    |    10|
+|20    |LD      |     8|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:05:37 ; elapsed = 00:06:13 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:04:21 ; elapsed = 00:05:47 . Memory (MB): peak = 1981.824 ; gain = 925.770
+Synthesis Optimization Complete : Time (s): cpu = 00:05:37 ; elapsed = 00:06:14 . Memory (MB): peak = 1981.824 ; gain = 1043.621
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.652 . Memory (MB): peak = 1981.824 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 954 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1981.824 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 8 instances were transformed.
+  LD => LDCE: 8 instances
+
+Synth Design complete | Checksum: 314d1f6c
+INFO: [Common 17-83] Releasing license: Synthesis
+32 Infos, 43 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:06:07 ; elapsed = 00:07:13 . Memory (MB): peak = 1981.824 ; gain = 1471.422
+INFO: [Coretcl 2-1174] Renamed 7 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.154 . Memory (MB): peak = 1981.824 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/MIHAJLO/faks/dvs/projekat/FINAL/FINAL.runs/ImageFilter_acc_image_filter_0_0_synth_1/ImageFilter_acc_image_filter_0_0.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1981.824 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_utilization -file ImageFilter_acc_image_filter_0_0_utilization_synth.rpt -pb ImageFilter_acc_image_filter_0_0_utilization_synth.pb
+write_vhdl: Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1981.824 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sun Mar 22 15:56:40 2026...

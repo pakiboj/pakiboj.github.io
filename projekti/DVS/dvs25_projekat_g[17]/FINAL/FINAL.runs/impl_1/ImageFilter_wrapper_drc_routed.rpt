@@ -1,0 +1,787 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Sun Mar 22 16:12:01 2026
+| Host         : DESKTOP-BV4G26R running 64-bit major release  (build 9200)
+| Command      : report_drc -file ImageFilter_wrapper_drc_routed.rpt -pb ImageFilter_wrapper_drc_routed.pb -rpx ImageFilter_wrapper_drc_routed.rpx
+| Design       : ImageFilter_wrapper
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+| Design State : Fully Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max violations: <unlimited>
+             Violations found: 146
++-----------+----------+-------------------------+------------+
+| Rule      | Severity | Description             | Violations |
++-----------+----------+-------------------------+------------+
+| DPIP-1    | Warning  | Input pipelining        | 109        |
+| DPOP-1    | Warning  | PREG Output pipelining  | 24         |
+| DPOP-2    | Warning  | MREG Output pipelining  | 6          |
+| PDCN-1569 | Warning  | LUT equation term check | 3          |
+| PDRC-153  | Warning  | Gated clock check       | 1          |
+| RTSTAT-10 | Warning  | No routable loads       | 1          |
+| REQP-181  | Advisory | writefirst              | 2          |
++-----------+----------+-------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+DPIP-1#1 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[0]0 input ImageFilter_i/acc_image_filter_0/U0/a11_reg[0]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#2 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[1]0 input ImageFilter_i/acc_image_filter_0/U0/a11_reg[1]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#3 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[2]0 input ImageFilter_i/acc_image_filter_0/U0/a11_reg[2]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#4 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[3]0 input ImageFilter_i/acc_image_filter_0/U0/a11_reg[3]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#5 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[10]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[10]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#6 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[11]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[11]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#7 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[4]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[4]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#8 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[5]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[5]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#9 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[6]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[6]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#10 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[7]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[7]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#11 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[8]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[8]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#12 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[9]0 input ImageFilter_i/acc_image_filter_0/U0/a21_reg[9]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#13 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[12]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[12]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#14 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[13]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[13]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#15 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[14]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[14]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#16 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[15]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[15]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#17 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[16]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[16]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#18 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[17]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[17]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#19 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[18]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[18]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#20 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[19]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[19]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#21 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[20]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[20]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#22 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[21]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[21]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#23 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[22]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[22]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#24 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[23]0 input ImageFilter_i/acc_image_filter_0/U0/a31_reg[23]0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#25 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[24] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[24]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#26 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[25] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[25]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#27 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[26] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[26]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#28 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[27] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[27]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#29 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[28] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[28]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#30 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[29] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[29]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#31 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[30] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[30]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#32 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[31] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[31]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#33 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[32] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[32]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#34 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[33] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[33]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#35 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[34] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[34]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#36 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[35] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[35]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#37 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[36] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[36]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#38 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[37] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[37]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#39 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[38] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[38]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#40 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a41_reg[39] input ImageFilter_i/acc_image_filter_0/U0/a41_reg[39]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#41 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[12] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[12]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#42 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[12] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[12]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#43 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[13] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[13]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#44 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[13] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[13]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#45 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[14] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[14]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#46 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[14] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[14]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#47 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[15] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[15]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#48 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[15] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[15]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#49 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[16] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[16]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#50 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[16] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[16]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#51 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[17] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[17]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#52 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[17] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[17]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#53 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[18] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[18]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#54 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[18] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[18]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#55 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[19] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[19]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#56 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a42_reg[19] input ImageFilter_i/acc_image_filter_0/U0/a42_reg[19]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#57 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[6] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[6]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#58 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[6] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[6]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#59 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[7] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[7]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#60 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[7] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[7]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#61 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[8] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[8]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#62 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[8] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[8]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#63 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[9] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[9]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#64 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a43_reg[9] input ImageFilter_i/acc_image_filter_0/U0/a43_reg[9]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#65 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a44_reg[3] input ImageFilter_i/acc_image_filter_0/U0/a44_reg[3]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#66 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a44_reg[3] input ImageFilter_i/acc_image_filter_0/U0/a44_reg[3]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#67 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a44_reg[4] input ImageFilter_i/acc_image_filter_0/U0/a44_reg[4]/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#68 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a44_reg[4] input ImageFilter_i/acc_image_filter_0/U0/a44_reg[4]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#69 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[0] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[0]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#70 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[10] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[10]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#71 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[12] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[12]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#72 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[14] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[14]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#73 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[16] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[16]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#74 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[18] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[18]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#75 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[20] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[20]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#76 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[22] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[22]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#77 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[24] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[24]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#78 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[26] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[26]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#79 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[28] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[28]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#80 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[2] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[2]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#81 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[30] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[30]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#82 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[32] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[32]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#83 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[34] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[34]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#84 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[36] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[36]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#85 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[38] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[38]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#86 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[40] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[40]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#87 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[42] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[42]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#88 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[44] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[44]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#89 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[46] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[46]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#90 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[48] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[48]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#91 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[4] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[4]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#92 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[50] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[50]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#93 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[52] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[52]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#94 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[54] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[54]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#95 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[56] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[56]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#96 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[58] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[58]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#97 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[60] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[60]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#98 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[62] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[62]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#99 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[64] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[64]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#100 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[66] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[66]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#101 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[68] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[68]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#102 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[6] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[6]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#103 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[70] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[70]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#104 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[72] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[72]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#105 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[74] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[74]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#106 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[76] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[76]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#107 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[78] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[78]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#108 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[80] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[80]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#109 Warning
+Input pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[8] input ImageFilter_i/acc_image_filter_0/U0/mult_reg[8]/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPOP-1#1 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[0]0 output ImageFilter_i/acc_image_filter_0/U0/a11_reg[0]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#2 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[1]0 output ImageFilter_i/acc_image_filter_0/U0/a11_reg[1]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#3 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[2]0 output ImageFilter_i/acc_image_filter_0/U0/a11_reg[2]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#4 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a11_reg[3]0 output ImageFilter_i/acc_image_filter_0/U0/a11_reg[3]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#5 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[10]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[10]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#6 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[11]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[11]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#7 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[4]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[4]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#8 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[5]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[5]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#9 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[6]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[6]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#10 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[7]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[7]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#11 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[8]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[8]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#12 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a21_reg[9]0 output ImageFilter_i/acc_image_filter_0/U0/a21_reg[9]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#13 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[12]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[12]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#14 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[13]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[13]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#15 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[14]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[14]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#16 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[15]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[15]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#17 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[16]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[16]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#18 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[17]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[17]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#19 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[18]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[18]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#20 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[19]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[19]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#21 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[20]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[20]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#22 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[21]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[21]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#23 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[22]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[22]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#24 Warning
+PREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/a31_reg[23]0 output ImageFilter_i/acc_image_filter_0/U0/a31_reg[23]0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-2#1 Warning
+MREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[24] multiplier stage ImageFilter_i/acc_image_filter_0/U0/mult_reg[24]/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+DPOP-2#2 Warning
+MREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[48] multiplier stage ImageFilter_i/acc_image_filter_0/U0/mult_reg[48]/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+DPOP-2#3 Warning
+MREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[80] multiplier stage ImageFilter_i/acc_image_filter_0/U0/mult_reg[80]/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+DPOP-2#4 Warning
+MREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/mult_reg[8] multiplier stage ImageFilter_i/acc_image_filter_0/U0/mult_reg[8]/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+DPOP-2#5 Warning
+MREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/scale_mult_reg multiplier stage ImageFilter_i/acc_image_filter_0/U0/scale_mult_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+DPOP-2#6 Warning
+MREG Output pipelining  
+DSP ImageFilter_i/acc_image_filter_0/U0/scale_mult_reg__0 multiplier stage ImageFilter_i/acc_image_filter_0/U0/scale_mult_reg__0/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+PDCN-1569#1 Warning
+LUT equation term check  
+Used physical LUT pin 'A1' of cell ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A5)+((~A5)*(~A2)*A3)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
+Related violations: <none>
+
+PDCN-1569#2 Warning
+LUT equation term check  
+Used physical LUT pin 'A4' of cell ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A5)+((~A5)*(~A2)*A3)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
+Related violations: <none>
+
+PDCN-1569#3 Warning
+LUT equation term check  
+Used physical LUT pin 'A6' of cell ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A5)+((~A5)*(~A1)*A3)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
+Related violations: <none>
+
+PDRC-153#1 Warning
+Gated clock check  
+Net ImageFilter_i/acc_image_filter_0/U0/AXI_REGISTERS/reg_ctrl_locked_reg[2]_2 is a gated clock net sourced by a combinational pin ImageFilter_i/acc_image_filter_0/U0/AXI_REGISTERS/input_data_reg[7]_i_2/O, cell ImageFilter_i/acc_image_filter_0/U0/AXI_REGISTERS/input_data_reg[7]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Related violations: <none>
+
+RTSTAT-10#1 Warning
+No routable loads  
+33 net(s) have no routable loads. The problem bus(es) and/or net(s) are ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_i,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg[2:0],
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_i,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg[2:0],
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_i,
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+ImageFilter_i/axi_mem_intercon/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg[2:0]
+ (the first 15 of 21 listed nets/buses).
+Related violations: <none>
+
+REQP-181#1 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (ImageFilter_i/axi_dma_0/U0/I_PRMRY_DATAMOVER/GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER/GEN_INCLUDE_MM2S_SF.I_RD_SF/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
+Related violations: <none>
+
+REQP-181#2 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (ImageFilter_i/axi_dma_0/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
+Related violations: <none>
+
+

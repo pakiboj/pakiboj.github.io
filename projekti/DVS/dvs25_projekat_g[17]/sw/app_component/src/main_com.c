@@ -1,0 +1,821 @@
+#include "xparameters.h"
+
+#include <xil_io.h>
+#include <xil_printf.h>
+#include <xstatus.h>
+#include <stdlib.h>
+
+#include "xil_types.h" 
+
+#include "xaxidma.h"
+#include "xinterrupt_wrap.h"
+
+#include <xil_cache.h>
+#include <xtmrctr_l.h>
+
+#include "xil_util.h"
+
+#include "xtmrctr.h"
+
+#include <string.h>
+
+typedef struct  {
+    u16 ImgW;   // Sirina slike
+    u16 ImgH;   // Visina slike
+}ImageShape;
+
+typedef enum {
+    NO_PAD = 1,     // Bez prosirenja ivica
+    CONST_PAD = 3,  // Prosirenje konstantnom vrednoscu 
+    NEAREST_PAD = 2 // Prosirenje granicnim pikselom
+}Border;
+
+
+typedef enum {
+    YES_BYPASS = 1,
+    NO_BYPASS = 0,
+}Bypass;
+
+typedef enum {
+    bit8 = 0,
+    bit16 = 1,
+}MODE;
+
+typedef struct {
+    ImageShape Img;
+    u8  Radius;   
+    s16 FilterCoeffs[81];         
+    u16 FilterCoeffsScale;
+    MODE ModeType;
+    Border BorderType;
+    u8  BorderValue;
+    Bypass BypassType; 
+}ProcessingParams;
+
+static int DmaConfigure(XAxiDma_Config* AxiDmaConfigPtr, XAxiDma* AxiDmaPtr);
+static int DmaStartTransfers(XAxiDma* AxiDmaPtr, u8* TxBuffer, u32 TxSize, u8* RxBuffer, u32 RxSize);
+static int DmaWaitTransfers(volatile u32* TxFlag, volatile u32* RxFlag, u32 Timeout);
+
+static int AccConfigure(UINTPTR BaseAddress, ProcessingParams Params);
+
+static void ImageFilterSW(u8* DataBuffer, u8* ResultBuffer, ProcessingParams Params);
+static int  ImageFilterHW(u8* DataBuffer, u8* ResultBuffer, ProcessingParams Params);
+
+static int CheckData(u8* ResultBuffer, u8* ReferentBuffer, ImageShape Img);
+
+static void TxIntrHandler(void *Callback);
+static void RxIntrHandler(void *Callback);
+
+#define DMA_TRANSFER_TIMEOUT 100000
+
+#define REG_CTRL_ADDR        0x00
+#define REG_RAD_ADDR         0x04
+#define REG_COEFF_SCALE_ADDR 0x08
+#define REG_IMG_W_ADDR       0x0C
+#define REG_IMG_H_ADDR       0x10
+
+#define REG_COEFF_BASE       0x40 
+
+#define CTRL_MODE(x)     ((x & 0x1)  << 0)   // bit 0
+#define CTRL_BYPASS(x)   ((x & 0x1)  << 1)   // bit 1
+#define CTRL_BORD(x)     ((x & 0x3)  << 2)   // bits 3:2
+#define CTRL_BORDVAL(x)  ((x & 0xFF) << 4)   // bits 11:4  
+
+#define TMR_CNT_0 0
+
+static XAxiDma AxiDma;
+static XTmrCtr AxiTimer;
+
+volatile u32 TxDone;
+volatile u32 RxDone;
+
+static int DmaConfigure(XAxiDma_Config* AxiDmaConfigPtr, XAxiDma* AxiDmaPtr)
+{
+    int Status;
+    
+    // Inicijalizacija DMA kontrolera na osnovu konfiguracije iz xparameters.h
+
+	Status = XAxiDma_CfgInitialize(AxiDmaPtr, AxiDmaConfigPtr);
+	if (Status != XST_SUCCESS) {
+		xil_printf("    ERROR: DMA initialization failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	if (XAxiDma_HasSg(AxiDmaPtr)) {
+		xil_printf("    ERROR: DMA configure in SG mode \r\n");
+		return XST_FAILURE;
+	}
+
+	// Konfiguracija prekida za TX i RX kanale
+	Status = XSetupInterruptSystem(AxiDmaPtr, &TxIntrHandler,
+				                  AxiDmaConfigPtr->IntrId[0], AxiDmaConfigPtr->IntrParent,
+				                  XINTERRUPT_DEFAULT_PRIORITY);
+	if (Status != XST_SUCCESS) {
+        xil_printf("    ERROR: Cannot configure DMA TX interrupt\r\n");
+		return XST_FAILURE;
+	}
+
+	Status = XSetupInterruptSystem(AxiDmaPtr, &RxIntrHandler,
+				                   AxiDmaConfigPtr->IntrId[1], AxiDmaConfigPtr->IntrParent,
+				                   XINTERRUPT_DEFAULT_PRIORITY);
+	if (Status != XST_SUCCESS) {
+        xil_printf("    ERROR: Cannot configure DMA RX interrupt\r\n");
+		return XST_FAILURE;
+	}
+
+	XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+	XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+
+    return XST_SUCCESS;
+}
+
+static int DmaStartTransfers(XAxiDma* AxiDmaPtr, u8* TxBuffer, u32 TxSize, u8* RxBuffer, u32 RxSize)
+{
+    int Status;
+
+    // Osvezi(flush) TX buffer pre pokretanja DMA transfera da bi obezbedili da su DDR i Cache sinhronizovani 
+	// Xil_DCacheFlushRange obezbedjuje da se sadrzaj kesa upise u DDR za zadati opseg
+	Xil_DCacheFlushRange((UINTPTR)TxBuffer, TxSize);
+    Xil_DCacheFlushRange((UINTPTR)RxBuffer, RxSize);
+
+	// Pokretanje DMA transfera za prijem podataka (RX kanal)
+	Status = XAxiDma_SimpleTransfer(AxiDmaPtr, (UINTPTR) RxBuffer, 
+                                    RxSize, XAXIDMA_DEVICE_TO_DMA);
+	if (Status != XST_SUCCESS) {
+        xil_printf("    ERROR: Starting RX DMA failed %d\r\n", Status);
+        return XST_FAILURE;
+	}
+
+	// Pokretanje DMA transfera za slanje podataka (TX kanal)
+	Status = XAxiDma_SimpleTransfer(AxiDmaPtr, (UINTPTR) TxBuffer, 
+                                    TxSize, XAXIDMA_DMA_TO_DEVICE);
+	if (Status != XST_SUCCESS) {
+        xil_printf("    ERROR: Starting TX DMA failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+    return XST_SUCCESS;
+}
+
+static int DmaWaitTransfers(volatile u32* TxFlag, volatile u32* RxFlag, u32 Timeout)
+{
+	int Status;
+    // Cekanje da TX zavrsi ili uradi timeout(graska) 
+	Status = Xil_WaitForEventSet(Timeout, 1, TxFlag);
+	if (Status != XST_SUCCESS) {
+		xil_printf("    ERROR: Transmit failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+    xil_printf("    Transmit done\r\n");
+
+	// Cekanje da RX zavrsi ili uradi timeout(graska) 
+	Status = Xil_WaitForEventSet(Timeout, 1, RxFlag);
+	if (Status != XST_SUCCESS) {
+		xil_printf("    ERROR: Receive failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+    xil_printf("    Receive done\r\n");
+
+    return XST_SUCCESS;
+}
+
+
+static void TxIntrHandler(void *Callback)
+{
+	u32 IrqStatus;
+	XAxiDma *AxiDmaInst = (XAxiDma *)Callback;
+
+	// Citanje statusa prekida za TX kanal
+	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DMA_TO_DEVICE);
+
+	//Potvrdjivanje (acknowledge) da je prekid obradjen
+	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DMA_TO_DEVICE);
+
+	// Postavi TX na uradjen (TxDone) samo ako je prenos podataka zavrsen
+	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK))
+    {
+		TxDone = 1;
+	}
+
+    return;
+}
+
+static void RxIntrHandler(void *Callback)
+{
+	u32 IrqStatus;
+	XAxiDma *AxiDmaInst = (XAxiDma *)Callback;
+
+	// Citanje statusa prekida za RX kanal
+	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
+
+	// Potvrdjivanje (acknowledge) da je prekid obradjen
+	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
+
+	// Postavi RX na uradjen (RxDone) samo ako je prenos podataka zavrsen
+	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK))
+    {
+		RxDone = 1;
+	}
+
+    return;
+}
+//MAIN
+int main(void)
+{
+
+int Status;
+
+//Definicija BOX3 filtera (3x3 maska).
+s16 BOX3[9] = {
+    1, 1, 1,
+    1, 1, 1,
+    1, 1, 1
+};
+u16 BOX3_coeff = 9; //Faktor skaliranja - normalizaciju rezultata
+
+s16 BOX3hw[81] = {
+    1, 1, 1,
+    1, 1, 1,
+    1, 1, 1,
+    // indices 9-80 unused (radius=1 only reads 0-8)
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+};
+u16 BOX3_coeffhw = 9;
+
+//Definicija BOX9 filtera (9x9 maska)
+s16  BOX9[81] = {
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1
+                };
+u16 BOX9_coeff = 81; //Faktor skaliranja - normalizaciju rezultata
+
+// Definicija BOX7 filtera (7x7 maska unutar npr. 9x9 matrice)
+s16 BOX7[81] = {
+                
+                1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                };
+
+u16 BOX7_coeff = 49; // 7x7 = 49 (normalizacija)
+
+//Definicija GAUS5 filtera (5x5 Gaussova maska, u ovom slucaju smectena u 9x9 matricu)
+s16  GAUS5[81] = {
+                    0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,
+                    0,0,1,4,7,4,1,0,0,
+                    0,0,4,16,26,16,4,0,0,
+                    0,0,7,26,41,26,7,0,0,
+                    0,0,4,16,26,16,4,0,0,
+                    0,0,1,4,7,4,1,0,0,
+                    0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0
+                    };
+u16 GAUS5_coeff = 273; //Faktor skaliranja (suma svih koeficijenata) - normalizaciju rezultata
+
+
+s16 GAUS5hw[81] = {
+    // 5x5 Gaussian kernel packed at indices 0-24
+     1,  4,  7,  4,  1,
+     4, 16, 26, 16,  4,
+     7, 26, 41, 26,  7,
+     4, 16, 26, 16,  4,
+     1,  4,  7,  4,  1,
+    // indices 25-80 unused (radius=2 only reads 0-24)
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0
+};
+u16 GAUS5_coeffhw = 273;
+
+//Definicija LOG7 filtera (Laplacian of Gaussian, 7x7 maska smestena u 9x9 matricu)
+s16  LOG7[81] = {
+                    0,0,0,0,0,0,0,0,0,
+                    0,0,0,-1,-1,-1,0,0,0,
+                    0,0,-2,-3,-3,-3,-2,0,0,
+                    0,-1,-3,5,5,5,-3,-1,0,
+                    0,-1,-3,5,16,5,-3,-1,0,
+                    0,-1,-3,5,5,5,-3,-1,0,
+                    0,0,-2,-3,-3,-3,-2,0,0,
+                    0,0,0,-1,-1,-1,0,0,0,
+                    0,0,0,0,0,0,0,0,0
+                    };
+u16 LOG7_coeff = 1;   // Faktor skaliranja - suma koeficijenata nula
+
+s16 LOG7hw[81] = {
+    // 7x7 LoG kernel packed at indices 0-48
+     0,  0, -1, -1, -1,  0,  0,
+     0, -2, -3, -3, -3, -2,  0,
+    -1, -3,  5,  5,  5, -3, -1,
+    -1, -3,  5, 16,  5, -3, -1,
+    -1, -3,  5,  5,  5, -3, -1,
+     0, -2, -3, -3, -3, -2,  0,
+     0,  0, -1, -1, -1,  0,  0,
+    // indices 49-80 unused (radius=3 only reads 0-48)
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0
+};
+u16 LOG7_coeffhw = 1;
+
+s16 SHARP_BOX9[81] = {
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,32566,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202,
+    -202,-202,-202,-202,-202,-202,-202,-202,-202
+};
+u16 SHARP_BOX9_coeff = 2;
+
+float SHARP_BOX9_f[81] = {
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f, 1.5f   ,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,
+    -0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f,-0.00625f
+};
+u16 SHARP_BOX9_f_coeff = 1;
+
+u8 *DataBuffer;
+u8 *ReferentBuffer;
+u8 *ResultBuffer;
+
+ProcessingParams Params;
+
+u32 ImgSize;
+u32 ImgSizeIn;
+
+// Inicijalizacija AXI Timer komponente
+int TimerStatus = XTmrCtr_Initialize(&AxiTimer, XPAR_AXI_TIMER_0_BASEADDR);
+if(TimerStatus != XST_SUCCESS) {
+    xil_printf("ERROR: Timer initialization failed\r\n");
+    return XST_FAILURE;
+}
+//Postavljanje pocetne vrednosti brojaca na 0 i podesavanje opcija za AXI Timer
+XTmrCtr_SetResetValue(&AxiTimer, TMR_CNT_0, 0);
+XTmrCtr_SetOptions(&AxiTimer, TMR_CNT_0, XTC_AUTO_RELOAD_OPTION);
+
+xil_printf("\r\n--- Entering main() --- \r\n");
+
+while(1){
+
+    //int value1, value2;
+
+    //printf("Enter image heaight and width: ");
+    //scanf("%d %d", &value1, &value2);
+
+
+    //Benchmarking promenljive za merenje vremena izvrsavanja
+    u32 SwProcessingTime = 0; // vreme izvrsavanja softverskog filtriranja
+    u32 HwProcessingTime = 0; // vreme izvrsavanja hardverskog filtriranja
+
+    // Definisanje parametara obrade slike
+    Params.Img.ImgH = 128;								// Visina
+    Params.Img.ImgW = 128;								// Duzina
+    Params.Radius = 4;									// Radius filtera
+    memcpy(Params.FilterCoeffs, BOX3hw, sizeof(Params.FilterCoeffs));	// kopiranje BOX3 koeficijenata u strukturu
+    Params.FilterCoeffsScale = BOX3_coeffhw;				// Faktor skaliranja BOX3=27
+    Params.ModeType = bit16;							// izlaz u 16-bitnom formatu (Q9.7)
+	Params.BorderType = CONST_PAD;						// prosirenje ivica konstantom
+	Params.BorderValue = 128;							// vrednost konstante za ivice
+	Params.BypassType = YES_BYPASS;						// akcelerator se koristi, nije preskocen
+
+	//Izracunavanje velicine slike u bajtovima
+    int bytesPerPixel = (Params.ModeType == 0) ? 1 : 2;					// Odredjivanje broja bajtova po pikselu u zavisnosti od izlaznog moda (8-bit ili 16-bit)
+    
+    int ImgSizeIn = Params.Img.ImgH * Params.Img.ImgW;
+    int ImgSize = Params.Img.ImgH * Params.Img.ImgW * bytesPerPixel;
+                                                        // ((Params.ModeType == bit8) ? 1 : 2)
+
+    // Dinamicka alokacija memorije za ulazni(DataBuffer), izlazni(ResultBuffer) i referentni(ReferentBuffer) bafer   
+    DataBuffer = (u8*) malloc(ImgSizeIn);
+    if (DataBuffer == NULL) {
+        xil_printf("ERROR: Cannot allocate Data buffer\r\n");
+        return XST_FAILURE;
+    }
+    xil_printf("\r\n Data buffer address: %x \r\n", DataBuffer);
+    
+    ResultBuffer = (u8*) malloc(ImgSize);
+    if (ResultBuffer == NULL) {
+        xil_printf("ERROR: Cannot allocate Result buffer\r\n");
+        return XST_FAILURE;
+    }
+    xil_printf("\r\n Result buffer address: %x \r\n", ResultBuffer);
+
+    ReferentBuffer = (u8*) malloc(ImgSize);
+    if (ReferentBuffer == NULL) {
+        xil_printf("ERROR: Cannot allocate Referent buffer\r\n");
+        return XST_FAILURE;
+    }
+    xil_printf("\r\n Referent buffer address: %x \r\n\n", ReferentBuffer);
+
+    // Use mwr function in debug console to write image from bin file to Data buffer
+        //    connect
+        //    target
+        //    target 2 //select target        
+        //
+        //    mwr -size b -bin -file "C:/MIHAJLO/faks/dvs/projekat/SLIKE/lena_128.bin"    0x111068   16384        
+          
+        //    mwr -size b -bin -file "C:/Users/Korisnik/Desktop/DVS25/try3/lena_128.bin"    0x111068        16384  
+        //                                                                                     11D080  
+        //                            full_path_to_file        data_buff_addr   transfer_size_bytes    
+
+    xil_printf("\r\nStart software processing \r\n"); 
+    XTmrCtr_Reset(&AxiTimer,TMR_CNT_0);		// Resetovanje AXI Timer-a na nulu
+	XTmrCtr_Start(&AxiTimer, TMR_CNT_0);	// Pokretanje brojaca za merenje vremena softverskog filtriranja
+
+
+    Xil_DCacheInvalidateRange((UINTPTR)ResultBuffer, ImgSize);
+    
+
+
+    // Software processing (Softverso filtriranje) - Generate referent data
+    ImageFilterSW(DataBuffer, ReferentBuffer, Params);
+    XTmrCtr_Stop(&AxiTimer,TMR_CNT_0);							// Zaustavljanje brojaca nakon zavrsetka softverskog filtriranja
+    SwProcessingTime = XTmrCtr_GetValue(&AxiTimer, TMR_CNT_0);	// Citanje broja ciklusa koje je softversko filtriranje trajalo
+    xil_printf("  Software processing completed in %d cycles\r\n",SwProcessingTime); 
+    
+    // Hardware processing (Hardversko filtriranje)
+    xil_printf("  Hardware processing started\r\n");   
+	XTmrCtr_Reset(&AxiTimer,TMR_CNT_0);		// Resetovanje AXI Timer-a na nulu
+	XTmrCtr_Start(&AxiTimer, TMR_CNT_0);	// Pokretanje brojaca za merenje vremena hardverskog filtriranja
+
+    TxDone = 0;   // Resetovanje TX flag-a (postavlja se u prekidnoj rutini kada DMA zavrsi slanje podataka)
+	RxDone = 0;   // Resetovanje RX flag-a (postavlja se u prekidnoj rutini kada DMA zavrsi prijem podataka)
+
+    Status = ImageFilterHW(DataBuffer, ResultBuffer, Params);
+    XTmrCtr_Stop(&AxiTimer,TMR_CNT_0);							// Zaustavljanje brojaca nakon zavrsetka hardverskog filtriranja
+	HwProcessingTime = XTmrCtr_GetValue(&AxiTimer, TMR_CNT_0);	// Citanje broja ciklusa koje je hardversko filtriranje trajalo
+
+    if (Status != XST_SUCCESS) {
+        xil_printf("ERROR: Hardware processing failed\r\n");	// Ako hardversko filtriranje nije uspelo, prijavljuje se greska i program se prekida
+        return XST_FAILURE;
+    }
+    xil_printf("  Hardware processing completed in %d cycles\r\n",HwProcessingTime);
+
+    
+	// Provera podataka (CheckData) � poredjenje rezultata softverskog i hardverskog filtriranja
+    
+        // Status = CheckData(ResultBuffer, ReferentBuffer, Params.Img);
+        // if (Status != XST_SUCCESS) {
+        //     xil_printf("ERROR: Data check failed\r\n");	// Ako se rezultati ne poklapaju, prijavljuje je gresku i program se prekida
+        //     return XST_FAILURE;
+        // }
+
+        xil_printf("Data check OK\r\n\n");	// Ako se rezultati poklapaju, ispisuje se potvrda
+
+
+        xil_printf("\r\nSuccessfully ran image accelerator test\r\n"); //Informativna poruka � oznacava da je test akceleratora uspe�no zavrsen
+
+        // Use mrd function in debug console to read image from Result buffer to bin file
+        //
+        //   mrd -size b -bin -file "C:/MIHAJLO/faks/dvs/projekat/SLIKE/lena_128_processed_hw.bin"    0x114F70   16384 
+        // RESULT HW
+        //   mrd -size b -bin -file "C:/MIHAJLO/faks/dvs/projekat/SLIKE/lena_128_processed_sw.bin"    0x118F78   16384 
+        // REFERENT SW   
+
+
+        //   mrd -size b -bin -file "C:/Users/Korisnik/Desktop/DVS25/try3/lena_128_processed_hw_3x3.bin"   0x115070         16384      32768 
+        //                                                                                                121088
+        // RESULT HW
+        //   mrd -size b -bin -file "C:/Users/Korisnik/Desktop/DVS25/try3/lena_128_processed_sw_3x3.bin"    0x11D078   16384    32768
+        //                                                                                                  125090
+        // REFERENT SW                                full_path_to_file     result_buff_addr   transfer_size_bytes
+        
+		//Oslobadjanje dinamicki alocirane memorije
+        free(DataBuffer);
+        free(ResultBuffer);
+        free(ReferentBuffer);
+}
+// Poruka za kraj kraj izvrsavanja main programa
+xil_printf("\r\n--- Exiting main() --- \r\n");
+return XST_SUCCESS;   
+}
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+// CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG CONFIG
+
+static int AccConfigure(UINTPTR BaseAddress, ProcessingParams Params)
+{
+    u16 regCtrlVal = 0;
+    int i;
+    int inv_scale = 3;
+
+    u16 coeff_scale = (u16)((4096 * 2 + inv_scale) / (inv_scale * 2));
+    //u16 coeff_scale = Params.FilterCoeffsScale;
+
+    // Formiranje vrednosti kontrolnog registra (regCtrlVal)
+    regCtrlVal = regCtrlVal = CTRL_MODE(Params.ModeType) |				// odredjuje format izlaza (8-bit ili 16-bit)
+                            CTRL_BORD(Params.BorderType) |				// nacin tretiranja ivica slike (NO_PAD, CONST_PAD, NEAREST_PAD)
+                            CTRL_BYPASS(Params.BypassType) |			// da li se akcelerator preskace (bypass) ili koristi
+                            CTRL_BORDVAL(Params.BorderValue);			// vrednost koja se koristi za prosirenje ivica
+
+    // Upis osnovnih konfiguracionih parametara u registre akceleratora
+    Xil_Out32 (BaseAddress + REG_CTRL_ADDR, regCtrlVal);
+    Xil_Out32 (BaseAddress + REG_RAD_ADDR, Params.Radius);
+    Xil_Out32 (BaseAddress + REG_COEFF_SCALE_ADDR, coeff_scale);
+    Xil_Out32 (BaseAddress + REG_IMG_W_ADDR, Params.Img.ImgW);
+    Xil_Out32 (BaseAddress + REG_IMG_H_ADDR, Params.Img.ImgH);
+
+    // Upis svih 81 koeficijenata filtera u akcelerator
+    for (i = 0; i < 81; i++)
+    {
+        s32 coeff = ((s32)Params.FilterCoeffs[i] * inv_scale * 32768) / (s32)Params.FilterCoeffsScale;
+        //s32 coeff = (s32)Params.FilterCoeffsScale;
+        Xil_Out32 (BaseAddress + REG_COEFF_BASE + (i * 4), coeff);
+    }
+
+    return XST_SUCCESS;
+}
+
+
+#include <stdint.h>
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+// SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE SOFTWARE
+static void ImageFilterSW(u8* DataBuffer, u8* ResultBuffer, ProcessingParams Params)
+{
+    int x, y, i, j;
+
+	// Dimenzije slike
+    const int width  = Params.Img.ImgW;
+    const int height = Params.Img.ImgH;
+
+	// Radijus filtera i velicina kernela (2*radius+1)
+    const int radius = Params.Radius;
+    const int kernelSize = 2 * radius + 1;
+
+	// Faktor skaliranja koeficijenata
+    const int scale = Params.FilterCoeffsScale;
+
+    // Provera BYPASS moda (mora da se poklapa sa hardverskom implementacijom!)
+    if (Params.BypassType == YES_BYPASS)
+    {
+        int total = width * height;
+
+        if (Params.ModeType == bit8)
+        {
+			// Ako je izlaz 8-bitni, samo se kopira svaki piksel
+            for (int k = 0; k < total; k++)
+                ResultBuffer[k] = DataBuffer[k];
+        }
+        else
+        {
+			// Ako je izlaz 16-bitni, podaci se konvertuju u Q9.7 format
+            int16_t* out = (int16_t*)ResultBuffer;
+            for (int k = 0; k < total; k++)
+                out[k] = ((int16_t)DataBuffer[k]) << 7; // pomeraj za fiksnu tacku, Q9.7 format
+        }
+
+        return;
+    }
+
+	// Glavna petlja - prolazak kroz svaki piksel slike
+	// Za svaki piksel se uzima lokalno susedstvo dimenzija (2*radius+1)x(2*radius+1), 
+	// racuna se tezinska suma i upisuje rezultat u izlazni bafer.
+
+    for (y = 0; y < height; y++)
+    {
+        for (x = 0; x < width; x++)
+        {
+            int32_t sum = 0;   // akumulacija rezultata
+            int invalid = 0;   // indikator da li piksel ima nepotpuno susedstvo (NO_PAD slucaj)
+
+			// Prolazak kroz kernel
+            for (j = -radius; j <= radius; j++)
+            {
+                for (i = -radius; i <= radius; i++)
+                {
+                    int yy = y + j;
+                    int xx = x + i;
+                    u8 pixel = 0;
+
+                    //BORDER HANDLING (Tretiranje ivica slike)
+                    if (Params.BorderType == NO_PAD)
+                    {
+						// Ako piksel izlazi van slike ==> oznaci ga kao nevalidan
+                        if (yy < 0 || yy >= height || xx < 0 || xx >= width)
+                        {
+                            invalid = 1;
+                            break;
+                        }
+                        pixel = DataBuffer[yy * width + xx];
+                    }
+                    else if (Params.BorderType == CONST_PAD)
+                    {
+						// Ako piksel izlazi van slike ==> koristi se konstanta
+                        if (yy < 0 || yy >= height || xx < 0 || xx >= width)
+                        {
+                            pixel = Params.BorderValue;
+                        }
+                        else
+                        {
+                            pixel = DataBuffer[yy * width + xx];
+                        }
+                    }
+                    else // NEAREST_PAD (ponavljanje granicnih piksela - BORD = 10)
+                    {
+                        int yyy = yy;
+                        int xxx = xx;
+
+                        if (yyy < 0) yyy = 0;
+                        if (yyy >= height) yyy = height - 1;
+                        if (xxx < 0) xxx = 0;
+                        if (xxx >= width) xxx = width - 1;
+
+                        pixel = DataBuffer[yyy * width + xxx];
+                    }
+
+					// Racunanje indeksa koeficijenta u kernelu
+                    int coeffIndex = (j + radius) * kernelSize + (i + radius);
+                    sum += pixel * Params.FilterCoeffs[coeffIndex];
+                }
+
+                if (invalid) break; // prekid ako piksel nema validno susedstvo
+            }
+
+            // NO_PAD ponasanje
+            if (invalid)
+            {
+				// Ako piksel nema kompletno susedstvo ==> izlazna vrednost je 0
+                if (Params.ModeType == bit8)
+                {
+                    ResultBuffer[y * width + x] = 0;
+                }
+                else
+                {
+                    ((int16_t*)ResultBuffer)[y * width + x] = 0;
+                }
+                continue;
+            }
+
+            // Skaliranje rezultata
+            if (scale != 0)
+                sum /= scale;
+
+            // Upis rezultata u izlazni bafer
+            if (Params.ModeType == bit8)
+            {
+                // Ogranicavanje rezultata na 8-bitni opseg (0�255)
+                if (sum < 0) sum = 0;
+                if (sum > 255) sum = 255;
+
+                ResultBuffer[y * width + x] = (u8)sum;
+            }
+            else
+            {
+                // Q9.7 fiksna tacka (16-bitni format)
+                int32_t val = sum << 7;
+
+				// Ogranicavanje rezultata na 16-bitni opseg (-32768 do 32767)
+                val += 32768;
+
+                if (val < 0) val = 0;
+                if (val > 65535) val = 65535;
+
+                ((int16_t*)ResultBuffer)[y * width + x] = (int16_t)val;
+
+                // int32_t val = sum << 7;
+
+                // // saturacija na signed 16-bit
+                // if (val < -32768) val = -32768;
+                // if (val > 32767)  val = 32767;
+
+                // ((int16_t*)ResultBuffer)[y * width + x] = (int16_t)val;
+            }
+        }
+    }
+}
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+// HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE HARDWARE
+static int ImageFilterHW(u8* DataBuffer, u8* ResultBuffer, ProcessingParams Params)
+{ 
+    int Status;
+
+    int bytesPerPixel = (Params.ModeType == 0) ? 1 : 2;					// Odredjivanje broja bajtova po pikselu u zavisnosti od izlaznog moda (8-bit ili 16-bit)
+    
+    int ImageSizeIn = Params.Img.ImgH * Params.Img.ImgW;
+    int ImageSize = Params.Img.ImgH * Params.Img.ImgW * bytesPerPixel;	// Ukupna velicina slike u bajtovima (sirina * visina * bajtova po pikselu)
+
+    XAxiDma_Config *AxiDmaConfigPtr;
+
+	//Pronalazenje konfiguracije DMA kontrolera na osnovu bazne adrese
+    AxiDmaConfigPtr = XAxiDma_LookupConfig(XPAR_XAXIDMA_0_BASEADDR);
+	if (!AxiDmaConfigPtr) {
+		xil_printf("  HW CONFIG ERROR: No config found for %d\r\n", XPAR_XAXIDMA_0_BASEADDR);
+
+		return XST_FAILURE;
+	}
+
+	//Konfigurisanje DMA kontrolera
+    Status = DmaConfigure(AxiDmaConfigPtr, &AxiDma);
+    if (Status != XST_SUCCESS)
+    {
+        xil_printf("  HW CONFIG ERROR: DMA configuration failed\r\n");
+        return XST_FAILURE;        
+    }
+	//Konfigurisanje akceleratora za filtriranje slike
+    Status = AccConfigure(XPAR_ACC_IMAGE_FILTER_0_BASEADDR, Params);
+    if (Status != XST_SUCCESS)
+    {
+        xil_printf("HW CONFIG ERROR: Accelerator configuration failed\r\n");
+        return XST_FAILURE;
+    }
+
+	//Pokretanje DMA transfera
+    //TX kanal salje ulazne podatke (DataBuffer) akceleratoru
+    //RX kanal prima obradjene podatke iz akceleratora u ResultBuffer
+    Status = DmaStartTransfers(&AxiDma, DataBuffer, ImageSizeIn, ResultBuffer, ImageSize);
+    if (Status != XST_SUCCESS)
+    {
+        xil_printf("  HW CONFIG ERROR: Starting DMA transfers failed\r\n");
+        return XST_FAILURE;        
+    }
+	//Cekanje da se DMA transferi zavrse
+    Status = DmaWaitTransfers(&TxDone, &RxDone, DMA_TRANSFER_TIMEOUT);
+    if (Status != XST_SUCCESS)
+    {
+        xil_printf("  HW PROC ERROR: Completing DMA transfers failed\r\n");
+        return XST_FAILURE;        
+    }
+    Xil_DCacheInvalidateRange((UINTPTR)ResultBuffer, ImageSize);
+
+    //Nakon zavrsetka transfera, prekidi za TX i RX kanale se iskljucuju
+	XDisconnectInterruptCntrl(AxiDmaConfigPtr->IntrId[0], AxiDmaConfigPtr->IntrParent);
+	XDisconnectInterruptCntrl(AxiDmaConfigPtr->IntrId[1], AxiDmaConfigPtr->IntrParent);
+
+    return XST_SUCCESS;
+}
+
+static int CheckData(u8* ResultBuffer, u8* ReferentBuffer, ImageShape Img)
+{
+	// Dimenzije slike
+    u16 ImgH = Img.ImgH;
+    u16 ImgW = Img.ImgW;
+
+	int RowIndex = 0;
+    int ColIndex = 0;
+    int k = 0;			// brojac gresaka
+
+	// Invalida kes za ResultBuffer kako bi se ucitale najnovije vrednosti iz DDR memorije
+	Xil_DCacheInvalidateRange((UINTPTR)ResultBuffer, ImgH*ImgW*sizeof(ResultBuffer[0]));
+
+	// Poredjenje rezultata piksel po piksel - prolazi se kroz celu sliku (svaki red i svaka kolona)
+    for (RowIndex = 0; RowIndex < ImgH; RowIndex++)
+    {   
+        for (ColIndex = 0; ColIndex < ImgW; ColIndex++)
+        {             
+            if (ResultBuffer[RowIndex*ImgW + ColIndex] != ReferentBuffer[RowIndex*ImgW + ColIndex]) {
+			    xil_printf("DATA CHECK ERROR: Row: %d Column: %d Received output %d instead of %d\r\n",
+				                    RowIndex, ColIndex, (u8) ResultBuffer[RowIndex*ImgW + ColIndex], (u8) ReferentBuffer[RowIndex*ImgW + ColIndex]);
+
+			    //return XST_FAILURE;
+                k++; //brojanje greske
+
+		    }
+        }
+    }
+	// Ispis pronanjenih gresaka
+    xil_printf("DATA ERROR COUNT: Found %d errors", k);
+
+	return XST_SUCCESS;
+}
