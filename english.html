@@ -3,125 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVS sajt za izradu projekta</title>
+    <title>My Resume</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
 </head>
+<body>
 
-<link rel="stylesheet" type="text/css" href="styles/dvs.css" />
-<link rel="stylesheet" type="text/css" href="styles/icons.css" />
+    <header> 
+        <h2 align="center"> 
+            My Resume
+            <a href="index.html" target="_blank">Кликни за СРБ</a>
+        </h2>
+        <hr>
+        <p>
+            <br>
+            Final-year student at <span style="color: #ff0000;">School of Electrical Engineering</span> in Belgrade, <br>
+            module <span style="color: #ff0000;">Electronics and Digital Systems</span>.
+            <br><br>
+            <div id="legend"> <b><u><font color="yellow">Legend:</font></u></b>
+                <ul>
+                    <li><a href="#personal">Personal Information</a></li>  
+                    <li><a href="#education">Education</a></li>  
+                    <li><a href="#skills">Skills</a></li> 
+                    <li><a href="#projects">Projects</a></li>  
+                    <li><a href="#cv">CV</a></li>
+                </ul>
+            </div>
+        </p>
+    </header>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<body >
-
-    <h1>
-        <a href="index.html" target = "_blank"> СРБ</a>
-    </h1>
-    
-    <h2> </h2>
-    <div class="linkovi">
-        <!-- <a href="../index.html">Povratak na prvu stranicu</a> </div>-->
-
-    
-    <div id="header"> Михајло Павловић ЦВ </div>
-    
-    <div style="text-align: left;" id="content"> Izrada projekta 
-  
+    <div id="personal"> 
+        <b><u><font color="yellow">Personal Information:</font></u></b>
+        <ul>
+            <li><b>Name: </b> Mihajlo Pavlovic</li>
+            <li><b>Date of Birth: </b> 21.01.2003</li>
+            <li><b>Place of Birth: </b> Valjevo, Serbia</li>
+            <li><b>Address: </b> Jurija Gagarina 110, Belgrade, Novi Beograd 11020</li>
+            <li><b>Phone: </b> +381652101204</li>
+            <li><b>Email: </b> pm210343d@student.etf.bg.ac.rs</li>
+            <li><b>GitHub: </b> <a href="https://github.com/pakiboj" target="_blank">https://github.com/pakiboj</a></li>
+        </ul>
     </div>
 
-    <div style="text-align: left;" id="reklame"> Kutak za muziku
-        <br>
-        <br>
-        <audio id="player" controls></audio> <br>
-        <script src="scripts/player.js"></script>
-
-        <button id="playpause" class="icon" onclick="playPauseAudio()"></button>
-
-        <button id="next" class="icon" onclick="Next()"></button> <br>
-
-        <h2 id="riff"> KLIKNI NA DUGME I</h2>
-        <h2 id="riff"> PRESKOČI NA MNOGO DOBAR RIFF</h2>
-        <button id="riff" class="icon" onclick="Riff()"></button>
+    <div id="education"> 
+        <b><u><font color="yellow">Education:</font></u></b>
+        <ol type="I">
+            <li>High School <br> <b>2017-2021</b> <a href="https://www.valjevskagimnazija.edu.rs/" target="_blank">Valjevo Gymnasium</a> - Mathematics gifted class</li>
+            <li>University - Bachelor Studies <br> <b>2021-Present</b> <a href="https://www.etf.bg.ac.rs/" target="_blank">School of Electrical Engineering</a> - Module: Electronics and Digital Systems</li>
+        </ol>
     </div>
 
+    <div id="skills"> 
+        <b><u><font color="yellow">Skills:</font></u></b>
+        <div class="skill-row">
+            <div class="skill-title">Analog Electronics</div>
+            <div class="skill-desc">
+                Measuring and analyzing analog circuits<br>
+                PCB design<br>
+                Designing analog circuits in Cadence Virtuoso<br>
+            </div>
+        </div>
 
+        <div class="skill-row">
+            <div class="skill-title">Digital Electronics</div>
+            <div class="skill-desc">
+                Hardware description in VHDL<br>
+                FPGA digital system design<br>
+            </div>
+        </div>
 
-    <div style="text-align: left; background-color: rgba(184, 167, 167, 0.6);" id="Messagebox"> Ostavite nam poruku
-        <form id="contact-form">
-        <input
-            type="text"
-            name="name"
-            placeholder="Vaše ime"
-            required
-            style="padding: 10px 50px;"
-        />
+        <div class="skill-row">
+            <div class="skill-title">Signal Processing</div>
+            <div class="skill-desc">
+                Digital signal processing<br>
+                Digital image processing<br>
+                Machine learning<br>
+            </div>
+        </div>
 
-        <br>
+        <div class="skill-row">
+            <div class="skill-title">Programming</div>
+            <div class="skill-desc">
+                C/C++<br>
+                Python<br>
+                HTML, CSS, JavaScript, PHP, mySQL<br>
+                Object-oriented programming<br>
+            </div>
+        </div>
 
-        <textarea
-            name="message"
-            placeholder="Poruka"
-            rows="10"
-            cols="30"
-            required
-            style="padding: 50px 160px;"
-            
-        ></textarea>
-
-        <br><br>
-
-        <button type="submit">Send</button>
-        </form>
-
-        <script>
-        // Initialize EmailJS with your public key
-        (function() {
-            emailjs.init({
-                publicKey: "oz1vCSXNWIjjO-kOM"
-            });
-        })();
-
-        // Wait for DOM to load
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("contact-form");
-
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
-
-                // Send email using EmailJS
-                emailjs.sendForm(
-                    "service_av6muak",    // Your service ID
-                    "template_6k56kfe",   // Your template ID
-                    this                  // The form element
-                )
-                .then(() => {
-                    alert("Message sent successfully!");
-                    form.reset();
-                })
-                .catch((error) => {
-                    console.error("EmailJS Error:", error);
-                    alert("Failed to send message. Error: " + error.text);
-                });
-            });
-        });
-        </script>
+        Deep understanding of mathematics (linear algebra, probability theory, statistics, mathematical analysis) and electrical engineering. <br>
+        Completed B2 level of English.
     </div>
 
+    <div id="projects"> 
+        <b><u><font color="yellow">Projects:</font></u></b>
 
+        <b> Image Filtering Acceleration Using a Hardware Accelerator - </b> March 2026<br>
+            <p>
+                Course: Digital VLSI Systems (DVS)<br>
+                The project required implementing an AXI-based FPGA accelerator on the PYNQ-Z2 platform. <br>
+                The accelerator supports 3x3 to 9x9 filters, different filtering modes, DMA communication, and performance measurement using a timer.<br>
+                Hardware was implemented in VHDL, software in C, and verification was done using a Jupyter script. <br>
+                <a href="/projekti/DVS/dvs25_projekat_g[17]/DVS25_projektni_zadatak.pdf" target="_blank">Project description</a><br>
+                <a href="/projekti/DVS/dvs25_projekat_g[17]/Ubrzanje filtriranja slike.pdf" target="_blank">Project report</a><br>
+                <a href="https://github.com/pakiboj/VHDL-image-filter-accelerator"> Code </a>
+                <a href="https://pakiboj.github.io/DVSsajt.github.io/index.html"> Course website </a>
+            </p>
+            </div>
+            <div class="border-card">
 
+            <strong>Gas Flow Control System</strong> March 2026<br>
+            <p>
+                Course: Embedded Computer Systems (NRS)<br>
+                This project was more conceptual in nature. I applied knowledge gained from lectures to design <br>
+                microcontrollers and a complete system that could be used in a petrochemical plant for gas flow control. <br>
+                
+                <a href="/projekti/nrs/Projekat 2025-26 NRS.pdf" target="_blank">Project description</a><br>
+                <a href="/projekti/nrs/NRS-pm210343 (1).pdf" target="_blank">Project report</a><br>
+            </p>
+            </div>
+            <div class="border-card">
 
+            <strong>Digital Image Processing</strong> January 2026<br>
+            <p>
+                Course: Digital Image Processing (DIP)<br>
+                This project consists of 3 assignments completed in order to pass the course. The assignments were implemented in Python. <br>
+                In the first assignment, I practiced basic image processing skills such as color adjustment, brightness correction, contrast enhancement, and sharpening. <br>
+                In the second assignment, I worked on image filtering and restoration. I implemented a self-guided filter and attempted <br>
+                to implement a single-image deblurring filter, although unsuccessfully. <br>
+                In the third assignment, the focus was on detection and segmentation of shapes. I implemented a filter for counting tree rings. <br>
+                <a href="https://github.com/pakiboj/Digital-Image-Processing---Homework-"> Solutions and assignments </a>
+            </p>
+            </div>
+            <div class="border-card">
 
+            <strong>Bipolar Transistor Amplifier for 23 cm UHF Band</strong> January 2026<br>
+            <p>
+                Course: Microwave Electronics (ME)<br>
+                Through this course, I learned about amplifier operation at high frequencies. I gained practical experience and the opportunity to design <br>
+                such an amplifier using the knowledge acquired. The project was developed in Microwave Office. Afterwards, I designed a <br>
+                PCB in Altium Designer and assembled the required components. Finally, performance measurements were conducted <br>
+                to verify whether the amplifier operates as designed. <br>
+                <a href="/projekti/ME_извештај (1).pdf" target="_blank">Project report</a><br>
+            </p>
+            </div>
+            <div class="border-card">
 
+            <strong>Weekend House Powered by Renewable Energy Sources</strong> September 2025<br>
+            <p>
+                Course: Renewable Energy Systems (EOIE)<br>
+                The project was completed using knowledge gained during lectures. I designed a weekend house powered entirely by renewable energy sources, <br>
+                using the RETScreen tool. The project includes solar panels, wind turbines, and an energy storage system. <br>
+                <a href="/projekti/Izveštaj EOIE.docx" target="_blank">Project report</a><br>
+            </p>
+            </div>
+            <div class="border-card">
 
-    <!-- FOOTER -->
-<footer class="footer">
-    <p><b>Studenti:</b><br>
-    Mihajlo Pavlović 21/0343<br>
-    Jovan Jeremić 16/0554</p>
+            <strong>Digital Signal Processing</strong> August 2025<br>
+            <p>
+                Course: Digital Signal Processing (DSP)<br>
+                Through this course, I acquired fundamental skills in digital signal processing, including Fourier analysis,<br>
+                signal sampling, reconstruction, digital filter design, and performance analysis of digital systems. The project was implemented in Python. <br>
+                <a href="https://github.com/pakiboj/DSP"> Assignment solutions </a>
+            </p>
+            </div>
+            <div class="border-card">
 
-    <p><b>Profesori:</b><br>
-    doc. dr Jelena Popović-Božović (jelena@etf.bg.ac.rs)<br>
-    doc. dr Dragomir El Mezeni (elmezeni@etf.bg.ac.rs)</p>
-</footer>
+            <strong>Hardware Image Filtering Using Median Filter</strong> August 2025<br>
+            <p>
+                Course: VLSI System Design (VLSI)<br>
+                Through this course, I learned VHDL and FPGA digital design. The project did not involve implementing a large system or accelerator, <br>
+                but rather creating a component tested using testbench code. Due to time constraints and an atypical academic year,<br>
+                I did not manage to deploy the code onto the board. 
+                <a href="https://github.com/pakiboj/VLSIproj"> Assignment solutions </a>
+            </p>
+            </div>
+            <div class="border-card">
+
+            <strong>PCB Design for Measuring Skin Resistance and Heart Rate</strong> Summer 2024<br>
+            <p>
+                Course: Electronic System Design (PES) <br>
+                The project required designing a PCB board for measuring skin resistance and heart rate. The design was done in Altium Designer. <br>
+                The board was not fabricated, so this remained as a design exercise.
+                <a href="/projekti/PES/Projekat_2024_2025.pdf" target="_blank">Project description</a><br>
+                <a href="/projekti/PES/Assembly Drawings_[No Variations].pdf" target="_blank">PCB layout</a><br>
+                <a href="/projekti/PES/Schematic PDF_[No Variations].pdf" target="_blank">Circuit schematic</a><br>
+            </p>
+            </div>
+            <div class="border-card">
+
+            <strong>Binary to Hexadecimal Converter for x86 Processor in Assembly</strong> Summer 2024<br>
+            <p>
+                Course: Computer Electronics<br>
+                Through this course, I gained knowledge of x86 processor architecture and assembly programming. The project was implemented in MASM assembly <br>
+                within the Visual Studio environment. The converter is a console application that takes a binary number as input and outputs its hexadecimal equivalent. <br>
+                A minimalistic GUI was also created to simplify usage. <br>
+                <a href="https://github.com/pakiboj/REproj"> Assignment solutions </a>
+            </p>
+            </div>
+    </div>
+
+    <div id="cv">
+        <iframe src="/Mihajlo_Pavlovic_lat_26_3.pdf" width="800" height="1000" title="My CV"></iframe>
+        <br>
+        <a href="/Mihajlo_Pavlovic_lat_26_3.pdf" target="_blank">Download CV</a><br>
+    </div>
+
+    <footer>
+        <pre>
+Address: Jurija Gagarina 110, Belgrade, Novi Beograd 11020
+Settlement: Milorada Pavlovica 1, Valjevo 14000
+        </pre>
+    </footer>
 
 </body>
 </html>
